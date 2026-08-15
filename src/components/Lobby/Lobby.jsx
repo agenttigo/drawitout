@@ -128,39 +128,41 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-between p-3 md:p-6 relative overflow-hidden bg-[#f7f5f0] text-[#1e242b]">
+    <div className="min-h-screen w-full flex flex-col items-center justify-between p-2.5 sm:p-4 md:p-6 relative overflow-x-hidden bg-[#f7f5f0] text-[#1e242b]">
       {/* Gentle, Eye-Friendly Ambient Glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#e2ddd3]/40 rounded-full blur-3xl pointer-events-none animate-float" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#d4c9b8]/30 rounded-full blur-3xl pointer-events-none animate-glow" />
+      <div className="absolute top-1/4 left-1/4 w-72 md:w-96 h-72 md:h-96 bg-[#e2ddd3]/40 rounded-full blur-3xl pointer-events-none animate-float" />
+      <div className="absolute bottom-1/4 right-1/4 w-72 md:w-96 h-72 md:h-96 bg-[#d4c9b8]/30 rounded-full blur-3xl pointer-events-none animate-glow" />
 
       {/* Top Navbar with Language Selector */}
-      <div className="absolute top-4 right-4 z-20">
+      <div className="w-full max-w-[960px] flex items-center justify-between z-20 mb-2">
+        <div className="flex items-center space-x-1.5">
+          <button
+            type="button"
+            onClick={() => { soundEngine.playClick(); setShowHowToPlay(true); }}
+            className="px-2.5 py-1.5 md:px-3.5 md:py-1.5 rounded-full bg-[#f0ebe1] hover:bg-[#e7e1d5] border border-[#dcd5c8] text-[#2c333a] text-xs font-bold flex items-center space-x-1 transition touch-manipulation active:scale-95"
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-[#4a7c59]" />
+            <span className="hidden xs:inline">{t('how_to_play')}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => { soundEngine.playClick(); setShowAbout(true); }}
+            className="px-2.5 py-1.5 md:px-3.5 md:py-1.5 rounded-full bg-[#eaf2eb] hover:bg-[#deede0] border border-[#c7decb] text-[#2c5234] text-xs font-bold flex items-center space-x-1 transition touch-manipulation active:scale-95"
+          >
+            <Heart className="w-3.5 h-3.5 fill-current text-[#386641]" />
+            <span className="hidden xs:inline">{t('about_us')}</span>
+          </button>
+        </div>
+
         <LanguageSelector />
       </div>
 
-      <div className="w-full max-w-[960px] glass-panel rounded-3xl p-6 md:p-8 shadow-xl relative z-10 space-y-6 my-auto border border-[#e5e0d5] bg-white/95">
-        {/* Header Branding & Quick Info buttons */}
-        <div className="flex flex-col items-center space-y-3">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => { soundEngine.playClick(); setShowHowToPlay(true); }}
-              className="px-3.5 py-1.5 rounded-full bg-[#f0ebe1] hover:bg-[#e7e1d5] border border-[#dcd5c8] text-[#2c333a] text-xs font-bold flex items-center space-x-1.5 transition"
-            >
-              <HelpCircle className="w-4 h-4 text-[#4a7c59]" />
-              <span>{t('how_to_play')}</span>
-            </button>
-
-            <button
-              onClick={() => { soundEngine.playClick(); setShowAbout(true); }}
-              className="px-3.5 py-1.5 rounded-full bg-[#eaf2eb] hover:bg-[#deede0] border border-[#c7decb] text-[#2c5234] text-xs font-bold flex items-center space-x-1.5 transition"
-            >
-              <Heart className="w-4 h-4 fill-current text-[#386641]" />
-              <span>{t('about_us')}</span>
-            </button>
-          </div>
-
+      <div className="w-full max-w-[960px] glass-panel rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl relative z-10 space-y-4 md:space-y-6 my-auto border border-[#e5e0d5] bg-white/95">
+        {/* Header Branding */}
+        <div className="flex flex-col items-center space-y-2">
           {/* Light Theme SVG App Logo Banner */}
-          <div className="w-full max-w-sm my-1 hover:scale-[1.01] transition-transform duration-300">
+          <div className="w-full max-w-[260px] sm:max-w-xs md:max-w-sm hover:scale-[1.01] transition-transform duration-300">
             <img src="/logo-light.svg" alt="DrawItOut Logo" className="w-full h-auto drop-shadow-xs" />
           </div>
 
@@ -170,22 +172,22 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
         </div>
 
         {!isConnected && (
-          <div className="bg-[#fff9eb] border border-[#f3e3b3] text-[#8a6d1b] px-4 py-2.5 rounded-xl text-xs md:text-sm text-center font-bold animate-pulse">
+          <div className="bg-[#fff9eb] border border-[#f3e3b3] text-[#8a6d1b] px-3 py-2 rounded-xl text-xs md:text-sm text-center font-bold animate-pulse">
             ⚠️ Kapcsolódás a szerverhez... Kérlek várj egy pillanatot!
           </div>
         )}
 
         {errorMessage && (
-          <div className="bg-[#fcf0f0] border border-[#f5c6c6] text-[#b93838] px-4 py-2.5 rounded-xl text-xs md:text-sm text-center font-bold">
+          <div className="bg-[#fcf0f0] border border-[#f5c6c6] text-[#b93838] px-3 py-2 rounded-xl text-xs md:text-sm text-center font-bold">
             {errorMessage}
           </div>
         )}
 
         {/* Central Profile Builder */}
-        <div className="glass-card rounded-2xl p-5 md:p-6 space-y-5 border border-[#e5e0d5] bg-[#faf8f3]">
-          <div className="max-w-md mx-auto space-y-4">
+        <div className="glass-card rounded-2xl p-3.5 sm:p-5 md:p-6 space-y-4 border border-[#e5e0d5] bg-[#faf8f3]">
+          <div className="max-w-md mx-auto space-y-3 md:space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#343a40] mb-1.5">
+              <label className="block text-xs font-bold text-[#343a40] mb-1">
                 {t('player_name')}
               </label>
               <input
@@ -203,7 +205,7 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
         </div>
 
         {/* Three Action Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3 md:gap-4 pt-1">
           {/* 1. Practice Solo */}
           <button
             type="button"
@@ -212,7 +214,7 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
               saveProfile(playerName, avatar);
               onStartSandbox(playerName, avatar);
             }}
-            className="py-3.5 px-5 rounded-2xl bg-[#f4efe6] hover:bg-[#eae3d5] text-[#2b3036] font-bold text-xs md:text-sm border border-[#d8d1c2] transition hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 shadow-2xs"
+            className="py-3.5 px-4 rounded-2xl bg-[#f4efe6] hover:bg-[#eae3d5] text-[#2b3036] font-bold text-xs sm:text-sm border border-[#d8d1c2] transition hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 shadow-2xs touch-manipulation"
           >
             <Palette className="w-4.5 h-4.5 text-[#386641]" />
             <span>{t('practice_solo')}</span>
@@ -223,7 +225,7 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
             type="button"
             onClick={handleCreateRoom}
             disabled={loading || !isConnected}
-            className="py-3.5 px-5 rounded-2xl bg-[#386641] hover:bg-[#2d5234] text-white font-extrabold text-xs md:text-sm shadow-md shadow-[#386641]/20 transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 flex items-center justify-center space-x-2"
+            className="py-3.5 px-4 rounded-2xl bg-[#386641] hover:bg-[#2d5234] text-white font-extrabold text-xs sm:text-sm shadow-md shadow-[#386641]/20 transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 flex items-center justify-center space-x-2 touch-manipulation"
           >
             <PlusCircle className="w-4.5 h-4.5" />
             <span>{loading ? '...' : t('create_room_btn')}</span>
@@ -236,7 +238,7 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
               soundEngine.playClick();
               setShowJoinModal(true);
             }}
-            className="py-3.5 px-5 rounded-2xl bg-[#c86d3b] hover:bg-[#b05d2f] text-white font-extrabold text-xs md:text-sm shadow-md shadow-[#c86d3b]/20 transition hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2"
+            className="py-3.5 px-4 rounded-2xl bg-[#c86d3b] hover:bg-[#b05d2f] text-white font-extrabold text-xs sm:text-sm shadow-md shadow-[#c86d3b]/20 transition hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 touch-manipulation"
           >
             <Key className="w-4.5 h-4.5" />
             <span>{t('join_room_tab')}</span>
@@ -245,17 +247,17 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
       </div>
 
       {/* Footer */}
-      <div className="w-full max-w-[960px] relative z-10">
+      <div className="w-full max-w-[960px] relative z-10 mt-3">
         <Footer />
       </div>
 
       {/* Join Room Code Modal */}
       {showJoinModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/50 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-md glass-panel rounded-3xl p-6 md:p-8 border border-[#e5e0d5] text-[#1e242b] bg-white relative shadow-xl space-y-6">
+          <div className="w-full max-w-md glass-panel rounded-3xl p-5 md:p-8 border border-[#e5e0d5] text-[#1e242b] bg-white relative shadow-xl space-y-5">
             <button
               onClick={() => setShowJoinModal(false)}
-              className="absolute top-4 right-4 p-2 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-100 transition"
+              className="absolute top-4 right-4 p-2 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-100 transition touch-manipulation"
             >
               <X className="w-5 h-5" />
             </button>
@@ -275,13 +277,13 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
                 value={roomCodeInput}
                 onChange={(e) => setRoomCodeInput(e.target.value.toUpperCase())}
                 placeholder={t('room_code_placeholder')}
-                className="w-full bg-[#f9f8f5] border-2 border-[#dcd5c8] rounded-2xl px-4 py-4 text-center text-2xl font-black tracking-widest text-[#386641] uppercase focus:outline-none focus:border-[#386641] focus:bg-white transition"
+                className="w-full bg-[#f9f8f5] border-2 border-[#dcd5c8] rounded-2xl px-4 py-3.5 md:py-4 text-center text-2xl font-black tracking-widest text-[#386641] uppercase focus:outline-none focus:border-[#386641] focus:bg-white transition"
               />
 
               <button
                 type="submit"
                 disabled={loading || !roomCodeInput.trim()}
-                className="w-full py-3.5 px-6 rounded-2xl bg-[#386641] hover:bg-[#2d5234] text-white font-extrabold text-xs md:text-sm shadow-md transition disabled:opacity-50 flex items-center justify-center space-x-2"
+                className="w-full py-3.5 px-6 rounded-2xl bg-[#386641] hover:bg-[#2d5234] text-white font-extrabold text-xs md:text-sm shadow-md transition disabled:opacity-50 flex items-center justify-center space-x-2 touch-manipulation"
               >
                 <span>{loading ? '...' : t('join_room_btn')}</span>
                 <ArrowRight className="w-4 h-4" />

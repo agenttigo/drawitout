@@ -13,6 +13,17 @@ export const translations = {
     players_count: "{count} Fő",
     waiting_status: "⏳ Várakozik...",
 
+    // Mobile Navigation & Tabs
+    tab_canvas: "🎨 Vászon",
+    tab_chat: "💬 Chat",
+    tab_players: "👥 Játékosok",
+    tab_settings: "⚙️ Beállítások",
+    tab_reactions: "✨ Reakciók",
+    quick_guess_btn: "Tipp",
+    quick_guess_placeholder: "Írd be a tippedet ide...",
+    quick_guess_placeholder_guessed: "🔒 Kitaláltad! (Írj a Chat fülön)",
+    orientation_tip: "Tipp: Fordítsd el a kijelzőt a szélesebb rajzvászonhoz! 🔄",
+
     // Room Waiting Lobby & Pre-Game Settings
     waiting_room_title: "Szoba Előszoba & Játékbeállítások ⚙️",
     waiting_room_subtitle: "Hívd meg a barátaidat és állítsd be a játék paramétereit az indítás előtt!",
@@ -284,6 +295,17 @@ export const translations = {
     players_count: "{count} Players",
     waiting_status: "⏳ Waiting...",
 
+    // Mobile Navigation & Tabs
+    tab_canvas: "🎨 Canvas",
+    tab_chat: "💬 Chat",
+    tab_players: "👥 Players",
+    tab_settings: "⚙️ Settings",
+    tab_reactions: "✨ Reactions",
+    quick_guess_btn: "Guess",
+    quick_guess_placeholder: "Type your guess here...",
+    quick_guess_placeholder_guessed: "🔒 Guessed! (Chat in Chat tab)",
+    orientation_tip: "Tip: Rotate your device for a wider canvas! 🔄",
+
     // Room Waiting Lobby & Pre-Game Settings
     waiting_room_title: "Room Waiting Lobby & Game Settings ⚙️",
     waiting_room_subtitle: "Invite your friends and configure game parameters before starting!",
@@ -554,6 +576,17 @@ export const translations = {
     you_tag: "(Du)",
     players_count: "{count} Spieler",
     waiting_status: "⏳ Warten...",
+
+    // Mobile Navigation & Tabs
+    tab_canvas: "🎨 Leinwand",
+    tab_chat: "💬 Chat",
+    tab_players: "👥 Spieler",
+    tab_settings: "⚙️ Einstellungen",
+    tab_reactions: "✨ Reaktionen",
+    quick_guess_btn: "Tippen",
+    quick_guess_placeholder: "Tipp hier eingeben...",
+    quick_guess_placeholder_guessed: "🔒 Erraten! (Chat im Chat-Tab)",
+    orientation_tip: "Tipp: Drehe dein Gerät für eine breitere Leinwand! 🔄",
 
     // Room Waiting Lobby & Pre-Game Settings
     waiting_room_title: "Raum-Lobby & Spiel-Einstellungen ⚙️",

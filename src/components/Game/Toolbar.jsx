@@ -52,192 +52,214 @@ export function Toolbar({
   };
 
   return (
-    <div className="w-full glass-panel rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3 border border-[#e5e0d5] shadow-sm bg-white text-[#1e242b] animate-fade-in">
-      {/* Tools Picker */}
-      <div className="flex items-center space-x-1.5">
-        <button
-          onClick={() => handleToolSelect('pen')}
-          className={`p-2 rounded-xl transition ${
-            activeTool === 'pen'
-              ? 'bg-[#386641] text-white shadow-xs'
-              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-          }`}
-          title={t('tool_pen')}
-        >
-          <Pencil className="w-4 h-4" />
-        </button>
+    <div className="w-full glass-panel rounded-2xl p-2 md:p-3 flex flex-col md:flex-row items-center justify-between gap-2.5 border border-[#e5e0d5] shadow-sm bg-white text-[#1e242b] animate-fade-in select-none">
+      {/* Top Row on Mobile: Tools, Shapes, Undo, Clear */}
+      <div className="w-full md:w-auto flex items-center justify-between md:justify-start space-x-1.5 overflow-x-auto pb-1 md:pb-0 custom-scrollbar">
+        {/* Drawing Tools */}
+        <div className="flex items-center space-x-1">
+          <button
+            type="button"
+            onClick={() => handleToolSelect('pen')}
+            className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
+              activeTool === 'pen'
+                ? 'bg-[#386641] text-white shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+            }`}
+            title={t('tool_pen')}
+          >
+            <Pencil className="w-4 h-4 md:w-4 md:h-4" />
+          </button>
 
-        <button
-          onClick={() => handleToolSelect('highlighter')}
-          className={`p-2 rounded-xl transition ${
-            activeTool === 'highlighter'
-              ? 'bg-[#386641] text-white shadow-xs'
-              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-          }`}
-          title={t('tool_highlighter')}
-        >
-          <Highlighter className="w-4 h-4" />
-        </button>
+          <button
+            type="button"
+            onClick={() => handleToolSelect('highlighter')}
+            className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
+              activeTool === 'highlighter'
+                ? 'bg-[#386641] text-white shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+            }`}
+            title={t('tool_highlighter')}
+          >
+            <Highlighter className="w-4 h-4" />
+          </button>
 
-        <button
-          onClick={() => handleToolSelect('eraser')}
-          className={`p-2 rounded-xl transition ${
-            activeTool === 'eraser'
-              ? 'bg-[#386641] text-white shadow-xs'
-              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-          }`}
-          title={t('tool_eraser')}
-        >
-          <Eraser className="w-4 h-4" />
-        </button>
+          <button
+            type="button"
+            onClick={() => handleToolSelect('eraser')}
+            className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
+              activeTool === 'eraser'
+                ? 'bg-[#386641] text-white shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+            }`}
+            title={t('tool_eraser')}
+          >
+            <Eraser className="w-4 h-4" />
+          </button>
 
-        <button
-          onClick={() => handleToolSelect('fill')}
-          className={`p-2 rounded-xl transition ${
-            activeTool === 'fill'
-              ? 'bg-[#386641] text-white shadow-xs'
-              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-          }`}
-          title={t('tool_fill')}
-        >
-          <PaintBucket className="w-4 h-4" />
-        </button>
-
-        <div className="h-6 w-px bg-stone-200 mx-1" />
-
-        {/* Shapes */}
-        <button
-          onClick={() => handleToolSelect('line')}
-          className={`p-2 rounded-xl transition ${
-            activeTool === 'line'
-              ? 'bg-[#386641] text-white shadow-xs'
-              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-          }`}
-          title={t('tool_line')}
-        >
-          <Minus className="w-4 h-4" />
-        </button>
-
-        <button
-          onClick={() => handleToolSelect('circle')}
-          className={`p-2 rounded-xl transition ${
-            activeTool === 'circle'
-              ? 'bg-[#386641] text-white shadow-xs'
-              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-          }`}
-          title={t('tool_circle')}
-        >
-          <Circle className="w-4 h-4" />
-        </button>
-
-        <button
-          onClick={() => handleToolSelect('rectangle')}
-          className={`p-2 rounded-xl transition ${
-            activeTool === 'rectangle'
-              ? 'bg-[#386641] text-white shadow-xs'
-              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-          }`}
-          title={t('tool_rectangle')}
-        >
-          <Square className="w-4 h-4" />
-        </button>
-      </div>
-
-      {/* Color Swatches */}
-      <div className="flex items-center space-x-1.5">
-        <div className="flex flex-wrap gap-1 max-w-[210px]">
-          {COLOR_SWATCHES.map((color) => (
-            <button
-              key={color}
-              onClick={() => handleColorSelect(color)}
-              className={`w-5 h-5 rounded-full transition-transform ${
-                currentColor === color ? 'scale-125 ring-2 ring-[#386641] shadow-xs' : 'hover:scale-110 opacity-90'
-              }`}
-              style={{ backgroundColor: color }}
-            />
-          ))}
+          <button
+            type="button"
+            onClick={() => handleToolSelect('fill')}
+            className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
+              activeTool === 'fill'
+                ? 'bg-[#386641] text-white shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+            }`}
+            title={t('tool_fill')}
+          >
+            <PaintBucket className="w-4 h-4" />
+          </button>
         </div>
 
-        <input
-          type="color"
-          value={currentColor}
-          onChange={(e) => handleColorSelect(e.target.value)}
-          className="w-7 h-7 rounded-lg cursor-pointer border-0 bg-transparent"
-        />
-      </div>
+        <div className="h-6 w-px bg-stone-200 mx-0.5 md:mx-1 flex-shrink-0" />
 
-      {/* Stroke Size Slider */}
-      <div className="flex items-center space-x-2">
-        <input
-          type="range"
-          min="2"
-          max="36"
-          value={strokeWidth}
-          onChange={(e) => setStrokeWidth(Number(e.target.value))}
-          className="w-20 accent-[#386641]"
-        />
-        <span className="text-xs font-bold text-stone-600 w-5">{strokeWidth}px</span>
-      </div>
-
-      {/* Theme & Particle FX Selectors */}
-      <div className="flex items-center space-x-2">
-        <select
-          value={canvasTheme}
-          onChange={(e) => setCanvasTheme(e.target.value)}
-          className="bg-stone-50 border border-stone-200 rounded-xl px-2 py-1.5 text-xs font-bold text-stone-800"
-        >
-          <option value="white">🤍 {t('theme_white')}</option>
-          <option value="blackboard">🏫 {t('theme_blackboard')}</option>
-          <option value="graph">📐 {t('theme_graph')}</option>
-          <option value="blueprint">🔵 {t('theme_blueprint')}</option>
-        </select>
-
-        <select
-          value={particleFx}
-          onChange={(e) => setParticleFx(e.target.value)}
-          className="bg-stone-50 border border-stone-200 rounded-xl px-2 py-1.5 text-xs font-bold text-stone-800"
-        >
-          <option value="none">✏️ {t('fx_none')}</option>
-          <option value="stars">✨ {t('fx_stars')}</option>
-          <option value="rainbow">🌈 {t('fx_rainbow')}</option>
-        </select>
-      </div>
-
-      {/* Super Hint Powerup, Undo, Clear & Download Buttons */}
-      <div className="flex items-center space-x-1.5">
-        {onRequestSuperHint && (
+        {/* Shapes */}
+        <div className="flex items-center space-x-1">
           <button
-            onClick={() => { soundEngine.playClick(); onRequestSuperHint(); }}
-            className="p-2 rounded-xl bg-[#fff8eb] hover:bg-[#fdeecb] text-[#9c6615] transition border border-[#f5e3bc] font-bold text-xs flex items-center space-x-1"
-            title={t('powerup_super_hint')}
+            type="button"
+            onClick={() => handleToolSelect('line')}
+            className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
+              activeTool === 'line'
+                ? 'bg-[#386641] text-white shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+            }`}
+            title={t('tool_line')}
           >
-            <Lightbulb className="w-4 h-4 text-[#c86d3b] fill-current" />
+            <Minus className="w-4 h-4" />
           </button>
-        )}
 
-        <button
-          onClick={onUndo}
-          className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
-          title={t('undo_stroke')}
-        >
-          <RotateCcw className="w-4 h-4" />
-        </button>
+          <button
+            type="button"
+            onClick={() => handleToolSelect('circle')}
+            className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
+              activeTool === 'circle'
+                ? 'bg-[#386641] text-white shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+            }`}
+            title={t('tool_circle')}
+          >
+            <Circle className="w-4 h-4" />
+          </button>
 
-        <button
-          onClick={onClear}
-          className="p-2 rounded-xl bg-[#fdf0f0] hover:bg-[#fce1e1] text-[#b93838] transition border border-[#f4c2c2]"
-          title={t('clear_canvas')}
-        >
-          <Trash2 className="w-4 h-4" />
-        </button>
+          <button
+            type="button"
+            onClick={() => handleToolSelect('rectangle')}
+            className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
+              activeTool === 'rectangle'
+                ? 'bg-[#386641] text-white shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+            }`}
+            title={t('tool_rectangle')}
+          >
+            <Square className="w-4 h-4" />
+          </button>
+        </div>
 
-        <button
-          onClick={onDownload}
-          className="p-2 rounded-xl bg-[#eaf2eb] hover:bg-[#deede0] text-[#2c5234] transition border border-[#c7decb]"
-          title={t('download_png')}
-        >
-          <Download className="w-4 h-4" />
-        </button>
+        <div className="h-6 w-px bg-stone-200 mx-0.5 md:mx-1 flex-shrink-0" />
+
+        {/* Action buttons (Undo, Clear, SuperHint, Download) */}
+        <div className="flex items-center space-x-1 flex-shrink-0">
+          {onRequestSuperHint && (
+            <button
+              type="button"
+              onClick={() => { soundEngine.playClick(); onRequestSuperHint(); }}
+              className="p-2.5 md:p-2 rounded-xl bg-[#fff8eb] hover:bg-[#fdeecb] text-[#9c6615] transition border border-[#f5e3bc] font-bold text-xs flex items-center space-x-1 touch-manipulation"
+              title={t('powerup_super_hint')}
+            >
+              <Lightbulb className="w-4 h-4 text-[#c86d3b] fill-current" />
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={onUndo}
+            className="p-2.5 md:p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition touch-manipulation active:scale-95"
+            title={t('undo_stroke')}
+          >
+            <RotateCcw className="w-4 h-4" />
+          </button>
+
+          <button
+            type="button"
+            onClick={onClear}
+            className="p-2.5 md:p-2 rounded-xl bg-[#fdf0f0] hover:bg-[#fce1e1] text-[#b93838] transition border border-[#f4c2c2] touch-manipulation active:scale-95"
+            title={t('clear_canvas')}
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+
+          <button
+            type="button"
+            onClick={onDownload}
+            className="p-2.5 md:p-2 rounded-xl bg-[#eaf2eb] hover:bg-[#deede0] text-[#2c5234] transition border border-[#c7decb] touch-manipulation active:scale-95"
+            title={t('download_png')}
+          >
+            <Download className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Bottom Row on Mobile / Right Section on Desktop: Color Swatches & Stroke Width */}
+      <div className="w-full md:w-auto flex items-center justify-between md:justify-end gap-2 overflow-x-auto pt-1 md:pt-0 custom-scrollbar">
+        {/* Color Swatches */}
+        <div className="flex items-center space-x-1.5 flex-shrink-0">
+          <div className="flex items-center gap-1.5 max-w-[260px] md:max-w-[210px] overflow-x-auto py-1 custom-scrollbar">
+            {COLOR_SWATCHES.map((color) => (
+              <button
+                key={color}
+                type="button"
+                onClick={() => handleColorSelect(color)}
+                className={`w-6 h-6 md:w-5 md:h-5 rounded-full transition-transform touch-manipulation flex-shrink-0 ${
+                  currentColor === color ? 'scale-125 ring-2 ring-[#386641] shadow-xs' : 'hover:scale-110 opacity-90'
+                }`}
+                style={{ backgroundColor: color }}
+              />
+            ))}
+          </div>
+
+          <input
+            type="color"
+            value={currentColor}
+            onChange={(e) => handleColorSelect(e.target.value)}
+            className="w-7 h-7 md:w-7 md:h-7 rounded-lg cursor-pointer border-0 bg-transparent flex-shrink-0"
+          />
+        </div>
+
+        {/* Stroke Size Slider */}
+        <div className="flex items-center space-x-1.5 flex-shrink-0 bg-stone-50 px-2 py-1 rounded-xl border border-stone-200">
+          <input
+            type="range"
+            min="2"
+            max="36"
+            value={strokeWidth}
+            onChange={(e) => setStrokeWidth(Number(e.target.value))}
+            className="w-16 md:w-20 accent-[#386641]"
+          />
+          <span className="text-[11px] md:text-xs font-bold text-stone-600 w-5">{strokeWidth}px</span>
+        </div>
+
+        {/* Theme & Particle FX Selectors (Hidden on very small screens, visible on md+) */}
+        <div className="hidden lg:flex items-center space-x-2 flex-shrink-0">
+          <select
+            value={canvasTheme}
+            onChange={(e) => setCanvasTheme(e.target.value)}
+            className="bg-stone-50 border border-stone-200 rounded-xl px-2 py-1.5 text-xs font-bold text-stone-800"
+          >
+            <option value="white">🤍 {t('theme_white')}</option>
+            <option value="blackboard">🏫 {t('theme_blackboard')}</option>
+            <option value="graph">📐 {t('theme_graph')}</option>
+            <option value="blueprint">🔵 {t('theme_blueprint')}</option>
+          </select>
+
+          <select
+            value={particleFx}
+            onChange={(e) => setParticleFx(e.target.value)}
+            className="bg-stone-50 border border-stone-200 rounded-xl px-2 py-1.5 text-xs font-bold text-stone-800"
+          >
+            <option value="none">✏️ {t('fx_none')}</option>
+            <option value="stars">✨ {t('fx_stars')}</option>
+            <option value="rainbow">🌈 {t('fx_rainbow')}</option>
+          </select>
+        </div>
       </div>
     </div>
   );

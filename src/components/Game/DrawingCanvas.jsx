@@ -242,7 +242,9 @@ export function DrawingCanvas({
   const startDrawing = (e) => {
     if (!isDrawer) return;
     if (gameMode === 'ONE_STROKE' && hasDrawnOneStroke) return;
-    e.preventDefault();
+    if (e.cancelable && e.type.startsWith('touch')) {
+      e.preventDefault();
+    }
     const coords = getCanvasCoords(e);
 
     const canvas = canvasRef.current;
@@ -275,7 +277,9 @@ export function DrawingCanvas({
 
   const draw = (e) => {
     if (!isDrawer || !isDrawing) return;
-    e.preventDefault();
+    if (e.cancelable && e.type.startsWith('touch')) {
+      e.preventDefault();
+    }
     const coords = getCanvasCoords(e);
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -300,8 +304,11 @@ export function DrawingCanvas({
     }
   };
 
-  const stopDrawing = () => {
+  const stopDrawing = (e) => {
     if (!isDrawer || !isDrawing) return;
+    if (e && e.cancelable && e.type.startsWith('touch')) {
+      e.preventDefault();
+    }
     setIsDrawing(false);
 
     const canvas = canvasRef.current;
@@ -366,9 +373,9 @@ export function DrawingCanvas({
   };
 
   return (
-    <div className="w-full flex flex-col items-center space-y-3 relative">
-      {/* Canvas Box - Strictly White Always */}
-      <div className="relative w-full aspect-[4/3] max-h-[720px] rounded-2xl overflow-hidden glass-panel border-2 border-amber-200/80 shadow-xl flex items-center justify-center bg-white">
+    <div className="w-full flex flex-col items-center space-y-2.5 relative">
+      {/* Canvas Box - Strictly White Always & Touch-Action None */}
+      <div className="relative w-full aspect-[4/3] max-h-[70vh] md:max-h-[640px] rounded-2xl overflow-hidden glass-panel border-2 border-amber-200/80 shadow-md flex items-center justify-center bg-white touch-none">
         <canvas
           ref={canvasRef}
           width={800}
@@ -380,7 +387,9 @@ export function DrawingCanvas({
           onTouchStart={startDrawing}
           onTouchMove={draw}
           onTouchEnd={stopDrawing}
-          className={`w-full h-full object-contain bg-white ${
+          onTouchCancel={stopDrawing}
+          style={{ touchAction: 'none' }}
+          className={`w-full h-full object-contain bg-white touch-none ${
             isDrawer
               ? activeTool === 'fill'
                 ? 'canvas-cursor-fill'
@@ -401,7 +410,7 @@ export function DrawingCanvas({
         )}
 
         {!isDrawer && (
-          <div className="absolute top-3 left-3 bg-stone-900/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-amber-700/60 text-xs font-semibold text-white flex items-center space-x-1.5 shadow-lg pointer-events-none">
+          <div className="absolute top-2 left-2 md:top-3 md:left-3 bg-stone-900/80 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-amber-700/60 text-[11px] md:text-xs font-semibold text-white flex items-center space-x-1.5 shadow-lg pointer-events-none">
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
             <span>{t('spectator_mode')} {gameMode === 'BLIND' ? '(🙈)' : '✏️'}</span>
           </div>

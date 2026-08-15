@@ -41,36 +41,36 @@ export function AvatarBuilder({ avatar, onChange }) {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 w-full text-[#1e242b]">
+    <div className="flex flex-col items-center space-y-3 md:space-y-4 w-full text-[#1e242b]">
       {/* Main Avatar Preview */}
       <div className="relative group">
-        <div className="w-32 h-36 p-2 rounded-3xl bg-[#faf8f3] border-2 border-[#e5e0d5] flex items-center justify-center shadow-xs">
-          <AvatarRenderer avatar={avatar} size={100} />
+        <div className="w-28 h-32 md:w-32 md:h-36 p-2 rounded-3xl bg-[#faf8f3] border-2 border-[#e5e0d5] flex items-center justify-center shadow-xs">
+          <AvatarRenderer avatar={avatar} size={90} />
         </div>
 
         <button
           type="button"
           onClick={handleRandomize}
-          className="absolute -top-2 -right-2 p-2.5 bg-[#386641] hover:bg-[#2d5234] rounded-full text-white shadow-md hover:scale-110 active:scale-95 transition"
+          className="absolute -top-2 -right-2 p-2.5 bg-[#386641] hover:bg-[#2d5234] rounded-full text-white shadow-md hover:scale-110 active:scale-95 transition touch-manipulation"
           title="Random"
         >
           <Shuffle className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Quick Hero Presets */}
-      <div className="w-full space-y-1.5">
+      {/* Quick Hero Presets (Scrollable on mobile) */}
+      <div className="w-full space-y-1">
         <label className="block text-xs font-bold text-[#343a40] flex items-center space-x-1">
           <Sparkles className="w-3.5 h-3.5 text-[#e9c46a]" />
           <span>{t('avatar_presets')}</span>
         </label>
-        <div className="flex flex-wrap gap-1.5 justify-center">
+        <div className="flex flex-wrap gap-1.5 justify-center overflow-x-auto py-0.5 custom-scrollbar">
           {presetHeroes.map((hero) => (
             <button
               key={hero.key}
               type="button"
               onClick={() => handlePresetSelect(hero)}
-              className="py-1 px-2.5 rounded-xl bg-[#eaf2eb] hover:bg-[#deede0] border border-[#c7decb] text-[11px] font-extrabold text-[#2c5234] transition"
+              className="py-1 px-2.5 rounded-xl bg-[#eaf2eb] hover:bg-[#deede0] border border-[#c7decb] text-[11px] font-extrabold text-[#2c5234] transition touch-manipulation active:scale-95 flex-shrink-0"
             >
               {hero.name}
             </button>
@@ -79,18 +79,20 @@ export function AvatarBuilder({ avatar, onChange }) {
       </div>
 
       {/* Color Selector */}
-      <div className="w-full space-y-1.5">
+      <div className="w-full space-y-1">
         <div className="flex items-center text-xs font-bold text-[#343a40] space-x-1">
           <Palette className="w-3.5 h-3.5 text-[#386641]" />
           <span>{t('avatar_color')}</span>
         </div>
-        <div className="flex flex-wrap justify-center gap-1.5">
+        <div className="flex flex-wrap justify-center gap-1.5 md:gap-2 py-0.5">
           {AVATAR_COLORS.map(c => (
             <button
               key={c}
               type="button"
               onClick={() => { soundEngine.playClick(); onChange({ ...avatar, color: c }); }}
-              className={`w-6 h-6 rounded-full transition-transform ${avatar.color === c ? 'scale-125 ring-2 ring-[#386641] shadow-2xs' : 'opacity-85 hover:opacity-100 hover:scale-110'}`}
+              className={`w-6 h-6 md:w-6 md:h-6 rounded-full transition-transform touch-manipulation ${
+                avatar.color === c ? 'scale-125 ring-2 ring-[#386641] shadow-2xs' : 'opacity-85 hover:opacity-100 hover:scale-110 active:scale-95'
+              }`}
               style={{ backgroundColor: c }}
             />
           ))}
@@ -107,7 +109,7 @@ export function AvatarBuilder({ avatar, onChange }) {
           <select
             value={avatar.costume || 'apron'}
             onChange={(e) => { soundEngine.playClick(); onChange({ ...avatar, costume: e.target.value }); }}
-            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-2 py-1.5 text-[#1e242b] font-bold focus:outline-none focus:border-[#386641]"
+            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-2 py-2 text-[#1e242b] font-bold focus:outline-none focus:border-[#386641] touch-manipulation"
           >
             {COSTUME_STYLES.map(c => (
               <option key={c} value={c}>{t(`costume_${c}`)}</option>
@@ -123,7 +125,7 @@ export function AvatarBuilder({ avatar, onChange }) {
           <select
             value={avatar.item || 'brush'}
             onChange={(e) => { soundEngine.playClick(); onChange({ ...avatar, item: e.target.value }); }}
-            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-2 py-1.5 text-[#1e242b] font-bold focus:outline-none focus:border-[#386641]"
+            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-2 py-2 text-[#1e242b] font-bold focus:outline-none focus:border-[#386641] touch-manipulation"
           >
             {ITEM_STYLES.map(i => (
               <option key={i} value={i}>{t(`item_${i}`)}</option>
@@ -139,7 +141,7 @@ export function AvatarBuilder({ avatar, onChange }) {
           <select
             value={avatar.eyes}
             onChange={(e) => { soundEngine.playClick(); onChange({ ...avatar, eyes: e.target.value }); }}
-            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-2 py-1.5 text-[#1e242b] font-semibold focus:outline-none focus:border-[#386641]"
+            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-1.5 py-2 text-[#1e242b] font-semibold focus:outline-none focus:border-[#386641] touch-manipulation"
           >
             {EYES_STYLES.map(style => (
               <option key={style} value={style}>{t(`eyes_${style}`)}</option>
@@ -152,7 +154,7 @@ export function AvatarBuilder({ avatar, onChange }) {
           <select
             value={avatar.mouth}
             onChange={(e) => { soundEngine.playClick(); onChange({ ...avatar, mouth: e.target.value }); }}
-            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-2 py-1.5 text-[#1e242b] font-semibold focus:outline-none focus:border-[#386641]"
+            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-1.5 py-2 text-[#1e242b] font-semibold focus:outline-none focus:border-[#386641] touch-manipulation"
           >
             {MOUTH_STYLES.map(style => (
               <option key={style} value={style}>{t(`mouth_${style}`)}</option>
@@ -165,7 +167,7 @@ export function AvatarBuilder({ avatar, onChange }) {
           <select
             value={avatar.accessory}
             onChange={(e) => { soundEngine.playClick(); onChange({ ...avatar, accessory: e.target.value }); }}
-            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-2 py-1.5 text-[#1e242b] font-semibold focus:outline-none focus:border-[#386641]"
+            className="w-full bg-white border border-[#d8d3c5] rounded-xl px-1.5 py-2 text-[#1e242b] font-semibold focus:outline-none focus:border-[#386641] touch-manipulation"
           >
             {ACCESSORY_STYLES.map(acc => (
               <option key={acc} value={acc}>{t(`hat_${acc}`)}</option>
