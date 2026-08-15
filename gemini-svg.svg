@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" height="100%">
+  <defs>
+    <!-- Háttér és Fény gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+
+    <linearGradient id="penGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+
+    <!-- Finom neon ragyogás effekt -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Lekerekített kártya háttér -->
+  <rect width="600" height="200" rx="24" fill="url(#bgGrad)" />
+
+  <!-- Ikon csoport -->
+  <g transform="translate(45, 35)">
+    <!-- Szerkesztői segédkör (grid érzet) -->
+    <circle cx="65" cy="65" r="55" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="4 4" />
+    
+    <!-- Dinamikus ecsetvonal / Bézier görbe -->
+    <path d="M 25,85 C 45,25 85,105 105,45" fill="none" stroke="url(#primaryGrad)" stroke-width="8" stroke-linecap="round" filter="url(#glow)" />
+    
+    <!-- Stylus / Rajztoll hegy -->
+    <g transform="translate(103, 42) rotate(-45)">
+      <path d="M 0,0 L 10,-20 L -10,-20 Z" fill="url(#penGrad)" />
+      <polygon points="0,0 3,-6 -3,-6" fill="#ffffff" />
+      <circle cx="0" cy="0" r="2" fill="#ec4899" />
+    </g>
+    
+    <!-- Vektor csomópontok (Nodes) -->
+    <circle cx="25" cy="85" r="5" fill="#ffffff" stroke="#6366f1" stroke-width="2.5" />
+    <circle cx="105" cy="45" r="5" fill="#ffffff" stroke="#ec4899" stroke-width="2.5" />
+  </g>
+
+  <!-- Tipográfia / Szöveg csoport -->
+  <g transform="translate(195, 112)">
+    <text font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="52" font-weight="800" fill="#ffffff" letter-spacing="-1">
+      Draw<tspan fill="url(#primaryGrad)">ItOut</tspan>
+    </text>
+    <text y="32" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#94a3b8" letter-spacing="4">
+      VECTOR &amp; DRAWING APP
+    </text>
+  </g>
+</svg>
