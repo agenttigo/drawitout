@@ -1,90 +1,118 @@
-// Huge Hungarian Word Database (2500+ Words)
+// Hungarian Word Database - Clean, Rich & Real Words (No artificial compound prefixes)
 
 const baseGeneral = [
-  "alma", "autó", "ház", "fa", "nap", "hold", "csillag", "macska", "kutya", "asztal",
-  "szék", "könyv", "toll", "telefon", "óra", "kulcs", "lámpa", "ajtó", "ablak", "cipő",
-  "póló", "napszemüveg", "kalap", "sajt", "pizza", "fagylalt", "tortafény", "kávé", "csésze", "tányér",
-  "vízesés", "vulkán", "szivárvány", "repülőgép", "tengeralattjáró", "rakéta", "szélmalom", "világítótorony",
-  "kastély", "piramis", "komp", "helikopter", "hőlégballon", "szélturbina", "szökökút", "híd", "alagút", "vasút",
-  "űrállomás", "kerékpár", "roller", "gördeszka", "táska", "hátizsák", "pénztárca", "szemüveg", "gyűrű", "nyaklánc",
-  "karóra", "fésű", "tükör", "szappan", "fogkefe", "törölköző", "párna", "takaró", "ágy", "szekrény",
-  "szőnyeg", "függöny", "képkeret", "váza", "virágcsokor", "gyertya", "gyufa", "öngyújtó", "hamutartó", "esernyő",
-  "kesztyű", "sál", "kabát", "nadrág", "szoknya", "ruhacsipesz", "vasaló", "porszívó", "mosógép", "hűtőszekrény",
-  "mikrohullámú sütő", "kenyérpirító", "turmixgép", "kávéfőző", "vízforraló", "fazék", "serpenyő", "merőkanál", "vágódeszka",
-  "reszelő", "dugóhúzó", "sörnyitó", "konzervnyitó", "olló", "ragasztó", "vonalzó", "radír", "hegyező", "füzet",
-  "mappa", "tűzőgép", "gémkapocs", "boríték", "bélyeg", "naptár", "számológép", "irattartó", "szemetes", "seprű",
-  "felmosó", "vödör", "szivacs", "csipesz", "kalapács", "szög", "csavar", "csavarhúzó", "fűrész", "fogó",
-  "fúró", "kefe", "létra", "talicska", "ásó", "gereblye", "kapa", "locsolókanna", "fűnyíró", "kerítés"
+  "Naplemente", "Gitár", "Fagylalt", "Repülőgép", "Hóember", "Várkastély", "Világítótorony",
+  "Szemüveg", "Esernyő", "Vitorláshajó", "Zongora", "Kaktusz", "Helikopter", "Dinoszaurusz",
+  "Hátizsák", "Búvár", "Asztronauta", "Mikroszkóp", "Karácsonyfa", "Hőlégballon", "Tábortűz",
+  "Szivárvány", "Vulkán", "Vízesés", "Piramis", "Kincsesláda", "Kulcs", "Lakat", "Gördeszka",
+  "Kerékpár", "Motorbicikli", "Távcső", "Fényképezőgép", "Karóra", "Iránytű", "Földgömb",
+  "Korona", "Gyémánt", "Lufi", "Ejtőernyő", "Cipő", "Kalap", "Napszemüveg", "Kesztyű", "Csizma",
+  "Focilabda", "Sátor", "Hinta", "Csúszda", "Tükör", "Lámpa", "Festmény", "Torta", "Dob",
+  "Hegedű", "Trombita", "Csillag", "Telihold", "Napocska", "Bárányfelhő", "Villám", "Hópehely",
+  "Fenyőerdő", "Cseppkőbarlang", "Tengerpart", "Pálmasziget", "Függőhíd", "Vasútállomás",
+  "Szélmalom", "Mentőautó", "Tűzoltóautó", "Rendőrautó", "Tengeralattjáró", "Űrrakéta",
+  "Királyi palota", "Horgászbot", "Hajóhorgony", "Varázspálca", "Ajándékdoboz", "Ceruza",
+  "Toll", "Radír", "Vonalzó", "Olló", "Könyv", "Bélyeges levél", "Virágcserép", "Napraforgó",
+  "Piros rózsa", "Tulipán", "Gomba", "Kagylóhéj", "Homokvár", "Szánkó", "Jégkorcsolya",
+  "Snowboard", "Síléc", "Aranyérem", "Győztes kupa", "Nemzeti zászló", "Templomharang",
+  "Zseblámpa", "Tűzijáték", "Kerekeskút", "Malacpersely", "Aranytallér", "Bőrönd", "Pénztárca",
+  "Televízió", "Rádió", "Kávéfőző", "Kenyérpirító", "Mikrohullámú sütő", "Hűtőszekrény",
+  "Mosógép", "Porszívó", "Vasaló", "Varrógép", "Hajszárító", "Fogkefe", "Szappan",
+  "Törölköző", "Párna", "Paplan", "Függöny", "Szőnyeg", "Kandalló", "Hintaszék", "Kerti pad",
+  "Postaláda", "Szemeteskuka", "Létra", "Talicska", "Ásó", "Gereblye", "Locsolókanna",
+  "Fűnyíró", "Hintaágy", "Madáretető", "Madárijesztő", "Napágy", "Napernyő", "Úszógumi",
+  "Mentőmellény", "Szörfdeszka", "Búvárszemüveg", "Békatalp", "Kenu", "Kajak", "Evező",
+  // Új 100+ szavak gyűjteménye:
+  "Szemüvegtok", "Kulcstartó", "Hógömb", "Lakatkulcs", "Szélcsengő", "Kertitörpe", "Fürdőkád",
+  "Sárkányrepülő", "Karácsonyi gömb", "Görkorcsolya", "Fényképkeret", "Horgászháló", "Búvármaszk",
+  "Esernyőtartó", "Csillagszóró", "Kávéskanna", "Szendvicssütő", "Borosdugó", "Diótörő",
+  "Fenyőtoboz", "Színes ceruzák", "Hátitáska", "Cukortartó", "Teáskanna", "Palacsintasütő",
+  "Műkincs", "Kincses térkép", "Kalózhajó", "Lovagi páncél", "Varázsgömb", "Varázskönyv",
+  "Kísértetház", "Űrsisak", "Repülőcsészealj", "Társasjáték", "Rubik kocka", "Jojó",
+  "Plüssmaci", "Gumikacsa", "Vízibicikli", "Síugrósánc", "Csocsóasztal", "Darts tábla",
+  "Bowling golyó", "Teniszütő", "Boxkesztyű", "Focikapu", "Kosárlabdapalánk", "Bajnoki serleg",
+  "Ébresztőóra", "Homokóra", "Falióra", "Szemeteslapát", "Függőágy", "Kerti grill",
+  "Bogrács", "Tábori sátor", "Hálózsák", "Zsebkés", "Kulacs", "Fejlámpa", "Csillagkép",
+  "Hullócsillag", "Északi fény", "Napfogyatkozás", "Szélkakas", "Postagalamb", "Papagájkalitka", "Akvárium"
 ];
 
 const baseTech = [
-  "robot", "laptop", "okostelefon", "billentyűzet", "egér", "szerver", "mesterséges intelligencia",
-  "wifi", "fejhallgató", "mikrofon", "monitor", "pendrive", "webkamera", "drón", "virtuális szemüveg",
-  "videókártya", "processzor", "alaplap", "merevlemez", "tápegység", "nyomtató", "szkenner", "projektor",
-  "hangszóró", "router", "modem", "száloptika", "műhold", "teleszkóp", "mikroszkóp", "lézer", "akkumulátor",
-  "töltő", "powerbank", "okosóra", "fülhallgató", "konzol", "joystick", "gamepad", "kormány", "pedál",
-  "szoftver", "alkalmazás", "böngésző", "tűzfal", "vírusirtó", "adatbázis", "felhő", "algoritmus", "kód",
-  "kiberbűnöző", "hacker", "jelszó", "titkosítás", "pixel", "felbontás", "érintőképernyő", "biometria",
-  "szuperszámítógép", "kvantumszámítógép", "3d nyomtató", "szimulátor", "hologram", "kiberpont", "nanobot"
+  "Robot", "Laptop", "Okostelefon", "Billentyűzet", "Számítógépes egér", "Szerver", "Wifi router",
+  "Fejhallgató", "Mikrofon", "Számítógép monitor", "Pendrive", "Webkamera", "Drón",
+  "Virtuális valóság szemüveg", "Videókártya", "Processzor", "Alaplap", "Merevlemez",
+  "Színes nyomtató", "Szkenner", "Projektor", "Bluetooth hangszóró", "Távközlési műhold",
+  "Csillagászati teleszkóp", "Elektronmikroszkóp", "Lézermutató", "Akkumulátor", "Powerbank",
+  "Okosóra", "Vezeték nélküli fülhallgató", "Játékkonzol", "Joystick", "Kormánykerék",
+  "Adatbázis", "Felhőtárhely", "Programkód", "Kiber hacker", "Titkos jelszó", "Képpont",
+  "Érintőképernyő", "3D nyomtató", "Hologram", "Szuperszámítógép", "Optikai kábel",
+  "Napelem", "Szélerőmű turbina", "Elektromos autó gyorstöltő", "Kvantumszámítógép",
+  "Mesterséges intelligencia", "Távirányító", "USB kábel", "HDMI csatlakozó", "Memóriakártya"
 ];
 
 const baseMovies = [
-  "star wars", "harry potter", "avengers", "titanic", "shrek", "matrix", "pókember", "batman",
-  "joker", "pikachu", "spongyabob", "minecraft", "superman", "kalóz", "űrhajós", "dinoszaurusz",
-  "vampír", "zombi", "szellem", "varázsló", "szuperhős", "nindzsa", "sárkány", "gargoyle", "múmia",
-  "frankenstein", "dracula", "kedvenc", "dumbo", "bambi", "pinokkió", "hamupipőke", "hófehérke",
-  "csipkerózsika", "ariel", "aladdin", "herkules", "mulan", "pocahontas", "tarzan", "nemó", "dory",
-  "shrek", "fiona", "szamár", "csizmás kandúr", "minyonok", "gru", "villám mcqueen", "wall-e", "ratatouille",
-  "kung fu panda", "madagaszkár", "jégkorszak", "sötét lovag", "eredet", "csillagok között", "gladiátor"
+  "Pókember", "Batman", "Superman", "Joker", "Harry Potter", "Pikachu", "Spongyabob",
+  "Shrek", "Mickey Egér", "Donald Kacsa", "Minyonok", "Gru", "Darth Vader", "Yoda mester",
+  "Hulk", "Vasember", "Thor", "Amerika Kapitány", "Nemo kapitány", "Szimba az oroszlánkirály",
+  "Aladdin a csodalámpával", "Tarzan", "Dumbo a repülő elefánt", "Pinokkió", "Hamupipőke",
+  "Hófehérke", "Nindzsa harcos", "Karib-tengeri kalóz", "Varázsló tanonc", "Szuperhős",
+  "Tűzokádó sárkány", "Vámpír", "Zombi", "Kísértet", "Egyiptomi múmia", "Frankenstein szörnye",
+  "T-Rex dinoszaurusz", "Robin Hood", "Sherlock Holmes", "Drakula gróf", "Jack Sparrow kapitány",
+  "Super Mario", "Luigi", "Sonic a sündisznó", "Pac-Man", "Minecraft Steve", "Elza jégvarázs",
+  "Olaf a hóember", "Szamár a Shrekből", "Csizmás Kandúr", "Gandalf a mágus", "Gollam",
+  "Terminátor robot", "Gladiátor", "Villám McQueen autó", "Wall-E robot", "Lecsó a séfpatkány"
 ];
 
 const baseFood = [
-  "gulyásleves", "lángos", "kürtőskalács", "palacsinta", "hamburger", "sült krumpli", "szendvics",
-  "szőlő", "dinnye", "eper", "banán", "narancs", "citrom", "csokoládé", "popcorn", "sushi", "donut",
-  "muffin", "hotdog", "cookie", "spagetti", "taco", "croissant", "pörkölt", "halászlé", "töltött káposzta",
-  "somlói galuska", "dobostorta", "zserbó", "rétes", "beigli", "pogácsa", "briós", "kalács", "fánk",
-  "túró rudi", "gesztenyepüré", "gombóc", "nokedli", "tarhonya", "húsleves", "gyümölcsleves", "bableves",
-  "lencseleves", "jókai bableves", "brassói", "rántott hús", "rántott sajt", "lecsó", "paprikás krumpli"
+  "Olasz pizza", "Sajtos hamburger", "Kakaós palacsinta", "Fokhagymás lángos", "Kürtőskalács",
+  "Bográcsos gulyásleves", "Ropogós sült krumpli", "Sonkás szendvics", "Mustáros hotdog",
+  "Lekváros fánk", "Vanília fagylalt", "Csokoládés muffin", "Tábla csokoládé", "Dobostorta",
+  "Túrós rétes", "Somlói galuska", "Tejfölös pogácsa", "Friss croissant", "Bolognai spagetti",
+  "Mexikói taco", "Avokádós burrito", "Lazacos sushi", "Belga gofri", "Fahéjas almás pite",
+  "Sárga banán", "Piros alma", "Édes narancs", "Savanyú citrom", "Friss eper", "Erdei málna",
+  "Görögdinnye szelet", "Mézes sárgadinnye", "Szőlőfürt", "Őszibarack", "Kék szilva",
+  "Piros cseresznye", "Trópusi ananász", "Zöld kivi", "Érett avokádó", "Kerti paradicsom",
+  "Zöldpaprika", "Kígyóuborka", "Sárgarépa", "Főtt kukorica", "Trappista sajt", "Kovászos kenyér",
+  "Forró feketekávé", "Citromos tea", "Forró kakaó tejszínhabbal", "Hűsítő limonádé",
+  "Frissen facsart gyümölcslé", "Vajas pattogatott kukorica", "Sós perec", "Akácméz",
+  "Eperlekvár", "Tükörtojás", "Sonkás rántotta", "Bécsi rántott hús", "Szegedi halászlé",
+  "Töltött káposzta", "Túró rudi", "Gesztenyepüré tejszínhabbal", "Szilvás gombóc",
+  // Új finom ételek:
+  "Vattacukor", "Mézeskalács házikó", "Eperkrémleves", "Rántott sajt", "Császármorzsa",
+  "Mákos guba", "Szilvás lepény", "Csokifondü", "Banánturmix"
 ];
 
 const baseAnimals = [
-  "elefánt", "zsiráf", "oroszlán", "tigris", "pingvin", "delfin", "cápa", "polip", "kígyó", "béka",
-  "bálna", "sas", "bagoly", "kakas", "tehén", "ló", "nyúl", "mókus", "süni", "pillangó", "katicabogár",
-  "méhecske", "darázs", "hangya", "szúnyog", "légy", "pók", "skorpió", "krokodil", "alligátor", "teknős",
-  "gyík", "kaméleon", "iguan", "szalamandra", "hal", "aranyhal", "lazac", "pisztráng", "tonhal", "harcsa",
-  "csuka", "kárász", "ponty", "angolna", "manta", "rája", "tengeri csillag", "tengeri sün", "kagyló",
-  "osztriga", "homár", "rák", "garneéla", "tintahal", "kalmár", "medúza", "korall", "szivacs", "rozmár"
-];
-
-// Helper to expand list to 2500+ items using prefixes and descriptive combinations
-function generateExpandedList(baseList, prefixes) {
-  const result = new Set([...baseList]);
-  baseList.forEach(item => {
-    prefixes.forEach(prefix => {
-      result.add(`${prefix} ${item}`);
-    });
-  });
-  return Array.from(result);
-}
-
-const huPrefixes = [
-  "piros", "kék", "zöld", "sárga", "nagy", "kis", "repülő", "varázslatos", "óriás", "aranyos",
-  "gyors", "lassú", "régi", "új", "színes", "fényes", "arany", "ezüst", "szuper", "titkos",
-  "erdei", "tengeri", "égi", "éjszakai", "királyi", "jeges", "tüzes", "műanyag", "fa", "fém"
+  "Afrikai oroszlán", "Csíkos tigris", "Óriás elefánt", "Nyakas zsiráf", "Fekete-fehér zebra",
+  "Csimpánz majom", "Gorilla", "Barna medve", "Jegesmedve", "Óriáspanda", "Szürke farkas",
+  "Vörös róka", "Tapsifüles nyuszi", "Mókus makkal", "Tüskés süni", "Bőregér denevér",
+  "Házikutya", "Cirmos cica", "Paripa ló", "Boci tehén", "Göndör bárány", "Házikecske",
+  "Kismalac", "Csacsi szamár", "Púpos teve", "Láma", "Ugráló kenguru", "Koalamaci",
+  "Nílusi krokodil", "Páncélos teknősbéka", "Zöld gyík", "Színváltó kaméleon", "Tekeredő kígyó",
+  "Zöld levelibéka", "Fehérfejű rétisas", "Bölcs bagoly", "Vándorsólyom", "Színes papagáj",
+  "Rózsaszín flamingó", "Kecses hattyú", "Vadkacsa", "Háziliba", "Fehér gólya", "Füsti fecske",
+  "Feketerigó", "Császárpingvin", "Ugró delfin", "Kék bálna", "Gyilkos bálna orka",
+  "Fehér cápa", "Tengeri rája", "Nyolckarú polip", "Óriás tintahal", "Világító medúza",
+  "Tengeri csillag", "Csikóhal", "Folyami rák", "Tengeri homár", "Színpompás pillangó",
+  "Hétpettyes katicabogár", "Szorgos méhecske", "Vöröshangya", "Szitakötő", "Keresztespók",
+  "Skorpió", "Agancsos szarvas", "Kecses őzike", "Vaddisznó", "Fóka", "Agyaras rozmár",
+  "Vidra hallal", "Hód fatörzzsel", "Tengeri teknős", "Páva tollakkal", "Pelidián pelikán",
+  // Új állatok:
+  "Strucc", "Vadpulyka", "Szurikáta", "Kacsacsőrű emlős", "Mosómedve", "Lajhár",
+  "Kenguru", "Páva", "Kolibri", "Tengerimalac", "Hörcsög"
 ];
 
 export const hungarianWordCategories = {
-  general: generateExpandedList(baseGeneral, huPrefixes),
-  tech: generateExpandedList(baseTech, huPrefixes.slice(0, 10)),
-  movies: generateExpandedList(baseMovies, huPrefixes.slice(0, 10)),
-  food: generateExpandedList(baseFood, huPrefixes.slice(0, 10)),
-  animals: generateExpandedList(baseAnimals, huPrefixes)
+  general: baseGeneral,
+  tech: baseTech,
+  movies: baseMovies,
+  food: baseFood,
+  animals: baseAnimals,
 };
 
 export const hungarianWords = Array.from(new Set([
-  ...hungarianWordCategories.general,
-  ...hungarianWordCategories.tech,
-  ...hungarianWordCategories.movies,
-  ...hungarianWordCategories.food,
-  ...hungarianWordCategories.animals
+  ...baseGeneral,
+  ...baseTech,
+  ...baseMovies,
+  ...baseFood,
+  ...baseAnimals,
 ]));

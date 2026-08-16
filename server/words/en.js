@@ -1,88 +1,116 @@
-// Huge English Word Database (2500+ Words)
+// English Word Database - Clean, Rich & Real Words (No artificial compound prefixes)
 
 const baseGeneral = [
-  "apple", "car", "house", "tree", "sun", "moon", "star", "cat", "dog", "table",
-  "chair", "book", "pen", "phone", "clock", "key", "lamp", "door", "window", "shoe",
-  "tshirt", "sunglasses", "hat", "pizza", "icecream", "cake", "coffee", "cup", "plate",
-  "waterfall", "volcano", "rainbow", "airplane", "submarine", "rocket", "windmill", "lighthouse",
-  "castle", "pyramid", "ferry", "helicopter", "hot air balloon", "wind turbine", "fountain", "bridge", "tunnel", "railway",
-  "space station", "bicycle", "scooter", "skateboard", "bag", "backpack", "wallet", "glasses", "ring", "necklace",
-  "watch", "comb", "mirror", "soap", "toothbrush", "towel", "pillow", "blanket", "bed", "wardrobe",
-  "carpet", "curtain", "picture frame", "vase", "bouquet", "candle", "match", "lighter", "ashtray", "umbrella",
-  "gloves", "scarf", "coat", "pants", "skirt", "clothespin", "iron", "vacuum cleaner", "washing machine", "refrigerator",
-  "microwave", "toaster", "blender", "coffee maker", "kettle", "pot", "pan", "ladle", "cutting board",
-  "grater", "corkscrew", "bottle opener", "can opener", "scissors", "glue", "ruler", "eraser", "sharpener", "notebook",
-  "folder", "stapler", "paperclip", "envelope", "stamp", "calendar", "calculator", "bin", "broom",
-  "mop", "bucket", "sponge", "tweezers", "hammer", "nail", "screw", "screwdriver", "saw", "pliers",
-  "drill", "brush", "ladder", "wheelbarrow", "shovel", "rake", "hoe", "watering can", "lawnmower", "fence"
+  "Sunset", "Guitar", "Ice cream", "Airplane", "Snowman", "Castle", "Lighthouse",
+  "Glasses", "Umbrella", "Sailboat", "Piano", "Cactus", "Helicopter", "Dinosaur",
+  "Backpack", "Scuba diver", "Astronaut", "Microscope", "Christmas tree", "Hot air balloon", "Campfire",
+  "Rainbow", "Volcano", "Waterfall", "Pyramid", "Treasure chest", "Key", "Padlock", "Skateboard",
+  "Bicycle", "Motorcycle", "Telescope", "Camera", "Wristwatch", "Compass", "Globe",
+  "Crown", "Diamond", "Balloon", "Parachute", "Sneakers", "Top hat", "Sunglasses", "Mittens", "Boots",
+  "Soccer ball", "Tent", "Swing set", "Slide", "Mirror", "Desk lamp", "Painting", "Birthday cake", "Drums",
+  "Violin", "Trumpet", "Star", "Full moon", "Sun", "Cloud", "Lightning bolt", "Snowflake",
+  "Pine forest", "Cave", "Sandy beach", "Tropical island", "Suspension bridge", "Train station",
+  "Windmill", "Ambulance", "Fire truck", "Police car", "Submarine", "Space rocket",
+  "Royal palace", "Fishing rod", "Anchor", "Magic wand", "Gift box", "Pencil",
+  "Fountain pen", "Eraser", "Ruler", "Scissors", "Book", "Postcard", "Flower pot", "Sunflower",
+  "Red rose", "Tulip", "Mushroom", "Seashell", "Sandcastle", "Sled", "Ice skates",
+  "Snowboard", "Skis", "Gold medal", "Trophy cup", "Flag", "Church bell",
+  "Flashlight", "Fireworks", "Water well", "Piggy bank", "Gold coin", "Suitcase", "Wallet",
+  "Television", "Radio", "Coffee maker", "Toaster", "Microwave oven", "Refrigerator",
+  "Washing machine", "Vacuum cleaner", "Iron", "Hair dryer", "Toothbrush", "Soap bar",
+  "Towel", "Pillow", "Blanket", "Curtain", "Rug", "Fireplace", "Rocking chair", "Park bench",
+  "Mailbox", "Trash can", "Ladder", "Wheelbarrow", "Shovel", "Rake", "Watering can",
+  "Lawn mower", "Birdhouse", "Scarecrow", "Sunbed", "Beach umbrella", "Lifebuoy",
+  "Life jacket", "Surfboard", "Snorkel mask", "Flippers", "Canoe", "Kayak", "Paddle",
+  // 100+ New matching entries:
+  "Glasses case", "Keychain", "Snow globe", "Padlock key", "Wind chime", "Garden gnome", "Bathtub",
+  "Hang glider", "Christmas bauble", "Roller skates", "Photo frame", "Fishing net", "Diving mask",
+  "Umbrella stand", "Sparkler", "Coffee pot", "Sandwich maker", "Wine cork", "Nutcracker",
+  "Pinecone", "Colored pencils", "Rucksack", "Sugar bowl", "Teapot", "Pancake pan",
+  "Artifact", "Treasure map", "Pirate ship", "Knight armor", "Crystal ball", "Spellbook",
+  "Haunted house", "Space helmet", "Flying saucer", "Board game", "Rubik's cube", "Yoyo",
+  "Teddy bear", "Rubber duck", "Paddle boat", "Ski jump", "Foosball table", "Dartboard",
+  "Bowling ball", "Tennis racket", "Boxing glove", "Soccer goal", "Basketball hoop", "Championship trophy",
+  "Alarm clock", "Hourglass", "Wall clock", "Dustpan", "Hammock", "Garden grill",
+  "Cauldron", "Camping tent", "Sleeping bag", "Pocket knife", "Water flask", "Headlamp", "Constellation",
+  "Shooting star", "Northern lights", "Solar eclipse", "Weather vane", "Homing pigeon", "Birdcage", "Aquarium"
 ];
 
 const baseTech = [
-  "robot", "laptop", "smartphone", "keyboard", "mouse", "server", "artificial intelligence",
-  "wifi", "headphones", "microphone", "monitor", "usb drive", "webcam", "drone", "vr headset",
-  "graphics card", "processor", "motherboard", "hard drive", "power supply", "printer", "scanner", "projector",
-  "speaker", "router", "modem", "fiber optics", "satellite", "telescope", "microscope", "laser", "battery",
-  "charger", "power bank", "smartwatch", "earbuds", "console", "joystick", "gamepad", "steering wheel", "pedal",
-  "software", "application", "browser", "firewall", "antivirus", "database", "cloud", "algorithm", "code",
-  "cybercriminal", "hacker", "password", "encryption", "pixel", "resolution", "touchscreen", "biometrics",
-  "supercomputer", "quantum computer", "3d printer", "simulator", "hologram", "cyberpunk", "nanobot"
+  "Robot", "Laptop", "Smartphone", "Keyboard", "Computer mouse", "Server rack", "Wifi router",
+  "Headphones", "Microphone", "Monitor", "USB flash drive", "Webcam", "Drone",
+  "VR headset", "Graphics card", "Processor", "Motherboard", "Hard drive",
+  "Color printer", "Scanner", "Projector", "Bluetooth speaker", "Satellite",
+  "Telescope", "Electron microscope", "Laser pointer", "Rechargeable battery", "Power bank",
+  "Smartwatch", "Wireless earbuds", "Game console", "Joystick", "Steering wheel",
+  "Database", "Cloud server", "Source code", "Hacker", "Password", "Pixel",
+  "Touchscreen", "3D printer", "Hologram", "Supercomputer", "Fiber optic cable",
+  "Solar panel", "Wind turbine", "EV charger", "Quantum computer",
+  "Artificial intelligence", "Remote control", "USB cable", "HDMI port", "Memory card"
 ];
 
 const baseMovies = [
-  "star wars", "harry potter", "avengers", "titanic", "shrek", "matrix", "spider man", "batman",
-  "joker", "pikachu", "spongebob", "minecraft", "superman", "pirate", "astronaut", "dinosaur",
-  "vampire", "zombie", "ghost", "wizard", "superhero", "ninja", "dragon", "gargoyle", "mummy",
-  "frankenstein", "dracula", "minion", "dumbo", "bambi", "pinocchio", "cinderella", "snow white",
-  "sleeping beauty", "ariel", "aladdin", "hercules", "mulan", "pocahontas", "tarzan", "nemo", "dory",
-  "donkey", "puss in boots", "minions", "gru", "lightning mcqueen", "wall-e", "ratatouille",
-  "kung fu panda", "madagascar", "ice age", "dark knight", "inception", "interstellar", "gladiator"
+  "Spider-Man", "Batman", "Superman", "Joker", "Harry Potter", "Pikachu", "SpongeBob",
+  "Shrek", "Mickey Mouse", "Donald Duck", "Minions", "Gru", "Darth Vader", "Master Yoda",
+  "Hulk", "Iron Man", "Thor", "Captain America", "Captain Nemo", "Simba the lion",
+  "Aladdin and magic lamp", "Tarzan", "Dumbo the flying elephant", "Pinocchio", "Cinderella",
+  "Snow White", "Ninja warrior", "Pirates of the Caribbean", "Wizard apprentice", "Superhero",
+  "Fire breathing dragon", "Vampire", "Zombie", "Ghost", "Mummy", "Frankenstein monster",
+  "T-Rex dinosaur", "Robin Hood", "Sherlock Holmes", "Count Dracula", "Captain Jack Sparrow",
+  "Super Mario", "Luigi", "Sonic the Hedgehog", "Pac-Man", "Minecraft Steve", "Elsa frozen",
+  "Olaf snowman", "Donkey from Shrek", "Puss in Boots", "Gandalf wizard", "Gollum",
+  "Terminator cyborg", "Gladiator", "Lightning McQueen", "Wall-E robot", "Ratatouille chef"
 ];
 
 const baseFood = [
-  "pancake", "hamburger", "french fries", "sandwich", "grapes", "watermelon", "strawberry",
-  "banana", "orange", "lemon", "chocolate", "popcorn", "sushi", "donut", "muffin", "hotdog",
-  "cookie", "spaghetti", "taco", "croissant", "stew", "fish soup", "stuffed cabbage",
-  "sponge cake", "strudel", "biscuit", "pie", "waffle", "brownie", "cheesecake", "cupcake",
-  "noodle", "ramen", "soup", "bread", "cheese", "butter", "milk", "juice", "tea", "coffee"
+  "Italian pizza", "Cheeseburger", "Pancakes with syrup", "French fries", "Ham sandwich",
+  "Hot dog with mustard", "Glazed donut", "Vanilla ice cream", "Chocolate muffin", "Chocolate bar",
+  "Croissant", "Spaghetti bolognese", "Mexican taco", "Burrito with salsa", "Salmon sushi roll",
+  "Belgian waffle", "Apple pie", "Yellow banana", "Red apple", "Sweet orange",
+  "Sour lemon", "Fresh strawberry", "Raspberry", "Watermelon slice", "Honey melon",
+  "Bunch of grapes", "Peach", "Plum", "Red cherry", "Tropical pineapple", "Green kiwi",
+  "Ripe avocado", "Tomato", "Green bell pepper", "Cucumber", "Carrot", "Sweet corn",
+  "Cheddar cheese", "Loaf of sourdough bread", "Hot espresso coffee", "Lemon iced tea",
+  "Hot cocoa with marshmallows", "Fresh lemonade", "Orange juice", "Buttered popcorn",
+  "Salted pretzel", "Honey jar", "Fried egg", "Scrambled eggs", "Vienna schnitzel",
+  "Fish soup", "Stuffed cabbage", "Cottage cheese snack", "Dumplings with jam",
+  // New matching food:
+  "Cotton candy", "Gingerbread house", "Strawberry soup", "Fried cheese", "Kaiserschmarrn",
+  "Poppy seed pastry", "Plum pie", "Chocolate fondue", "Banana smoothie"
 ];
 
 const baseAnimals = [
-  "elephant", "giraffe", "lion", "tiger", "penguin", "dolphin", "shark", "octopus", "snake", "frog",
-  "whale", "eagle", "owl", "rooster", "cow", "horse", "rabbit", "squirrel", "hedgehog", "butterfly", "ladybug",
-  "bee", "wasp", "ant", "mosquito", "fly", "spider", "scorpion", "crocodile", "alligator", "turtle",
-  "lizard", "chameleon", "iguana", "salamander", "fish", "goldfish", "salmon", "trout", "tuna", "catfish",
-  "pike", "carp", "eel", "manta", "stingray", "starfish", "sea urchin", "clam",
-  "oyster", "lobster", "crab", "shrimp", "squid", "jellyfish", "coral", "walrus", "seal", "penguin"
-];
-
-function generateExpandedList(baseList, prefixes) {
-  const result = new Set([...baseList]);
-  baseList.forEach(item => {
-    prefixes.forEach(prefix => {
-      result.add(`${prefix} ${item}`);
-    });
-  });
-  return Array.from(result);
-}
-
-const enPrefixes = [
-  "red", "blue", "green", "yellow", "big", "small", "flying", "magic", "giant", "cute",
-  "fast", "slow", "old", "new", "colorful", "shiny", "golden", "silver", "super", "secret",
-  "forest", "sea", "sky", "night", "royal", "ice", "fire", "plastic", "wooden", "metal"
+  "African lion", "Striped tiger", "Giant elephant", "Tall giraffe", "Black and white zebra",
+  "Chimpanzee monkey", "Gorilla", "Brown bear", "Polar bear", "Giant panda", "Grey wolf",
+  "Red fox", "Fluffy bunny", "Squirrel with acorn", "Hedgehog", "Bat",
+  "Pet dog", "Ginger cat", "Galloping horse", "Spotted cow", "Woolly sheep", "Farm goat",
+  "Piglet", "Donkey", "Two humped camel", "Llama", "Jumping kangaroo", "Koala bear",
+  "Nile crocodile", "Armored sea turtle", "Green lizard", "Color changing chameleon", "Coiling snake",
+  "Tree frog", "Bald eagle", "Wise barn owl", "Peregrine falcon", "Colorful parrot",
+  "Pink flamingo", "Graceful swan", "Mallard duck", "Goose", "White stork", "Barn swallow",
+  "Blackbird", "Emperor penguin", "Playful dolphin", "Blue whale", "Killer whale orca",
+  "Great white shark", "Stingray", "Eight armed octopus", "Giant squid", "Glowing jellyfish",
+  "Starfish", "Seahorse", "River crab", "Maine lobster", "Colorful butterfly",
+  "Seven spotted ladybug", "Honey bee", "Red ant", "Dragonfly", "Garden spider",
+  "Scorpion", "Antlered deer", "Wild boar", "Spotted seal", "Walrus with tusks",
+  "Sea otter", "Beaver building dam", "Peacock with feathers", "Pelican",
+  // New matching animals:
+  "Ostrich", "Wild turkey", "Meerkat", "Platypus", "Raccoon", "Sloth",
+  "Kangaroo", "Peacock", "Hummingbird", "Guinea pig", "Hamster"
 ];
 
 export const englishWordCategories = {
-  general: generateExpandedList(baseGeneral, enPrefixes),
-  tech: generateExpandedList(baseTech, enPrefixes.slice(0, 10)),
-  movies: generateExpandedList(baseMovies, enPrefixes.slice(0, 10)),
-  food: generateExpandedList(baseFood, enPrefixes.slice(0, 10)),
-  animals: generateExpandedList(baseAnimals, enPrefixes)
+  general: baseGeneral,
+  tech: baseTech,
+  movies: baseMovies,
+  food: baseFood,
+  animals: baseAnimals,
 };
 
 export const englishWords = Array.from(new Set([
-  ...englishWordCategories.general,
-  ...englishWordCategories.tech,
-  ...englishWordCategories.movies,
-  ...englishWordCategories.food,
-  ...englishWordCategories.animals
+  ...baseGeneral,
+  ...baseTech,
+  ...baseMovies,
+  ...baseFood,
+  ...baseAnimals,
 ]));

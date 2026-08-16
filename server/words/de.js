@@ -1,88 +1,116 @@
-// Huge German Word Database (2500+ Words)
+// German Word Database - Clean, Rich & Real Words (No artificial compound prefixes)
 
 const baseGeneral = [
-  "apfel", "auto", "haus", "baum", "sonne", "mond", "stern", "katze", "hund", "tisch",
-  "stuhl", "buch", "stift", "telefon", "uhr", "schlüssel", "lampe", "tür", "fenster", "schuh",
-  "tshirt", "sonnenbrille", "hut", "käse", "pizza", "eis", "kuchen", "kaffee", "tasse", "teller",
-  "wasserfall", "vulkan", "regenbogen", "flugzeug", "u-boot", "rakete", "windmühle", "leuchtturm",
-  "schloss", "pyramide", "fähre", "hubschrauber", "heißluftballon", "windrad", "brunnen", "brücke", "tunnel", "eisenbahn",
-  "raumstation", "fahrrad", "roller", "skateboard", "tasche", "rucksack", "geldbörse", "brille", "ring", "halskette",
-  "armbanduhr", "kamm", "spiegel", "seife", "zahnbürste", "handtuch", "kissen", "decke", "bett", "kleiderschrank",
-  "teppich", "vorhang", "bilderrahmen", "vase", "blumenstrauß", "kerze", "streichholz", "feuerzeug", "aschenbecher", "regenschirm",
-  "handschuhe", "schal", "mantel", "hose", "rock", "wäscheklammer", "bÜgeleisen", "staubsauger", "waschmaschine", "kühlschrank",
-  "mikrowelle", "toaster", "mixer", "kaffeemaschine", "wasserkocher", "topf", "pfanne", "schöpflöffel", "schneidebrett",
-  "reibe", "korkenzieher", "flaschenöffner", "dosenöffner", "schere", "kleber", "lineal", "radiergummi", "anspitzer", "heft",
-  "ordner", "hefter", "büroklammer", "umschlag", "briefmarke", "kalender", "taschenrechner", "papierkorb", "besen",
-  "wischmop", "eimer", "schwamm", "pinzette", "hammer", "nagel", "schraube", "schraubenzieher", "säge", "zange",
-  "bohrer", "bürste", "leiter", "schubkarre", "schaufel", "harke", "hacke", "gießkanne", "rasenmäher", "zaun"
+  "Sonnenuntergang", "Gitarre", "Eiscreme", "Flugzeug", "Schneemann", "Schloss", "Leuchtturm",
+  "Brille", "Regenschirm", "Segelboot", "Klavier", "Kaktus", "Hubschrauber", "Dinosaurier",
+  "Rucksack", "Taucher", "Astronaut", "Mikroskop", "Weihnachtsbaum", "Heißluftballon", "Lagerfeuer",
+  "Regenbogen", "Vulkan", "Wasserfall", "Pyramide", "Schatztruhe", "Schlüssel", "Vorhängeschloss", "Skateboard",
+  "Fahrrad", "Motorrad", "Teleskop", "Fotoapparat", "Armbanduhr", "Kompass", "Globus",
+  "Krone", "Diamant", "Luftballon", "Fallschirm", "Turnschuhe", "Zylinderhut", "Sonnenbrille", "Handschuhe", "Stiefel",
+  "Fußball", "Zelt", "Schaukel", "Rutsche", "Spiegel", "Schreibtischlampe", "Gemälde", "Geburtstagstorte", "Trommel",
+  "Geige", "Trompete", "Stern", "Vollmond", "Sonne", "Wolke", "Blitz", "Schneeflocke",
+  "Tannenwald", "Tropfsteinhöhle", "Sandstrand", "Palmeninsel", "Hängebrücke", "Bahnhof",
+  "Windmühle", "Krankenwagen", "Feuerwehrauto", "Polizeiauto", "U-Boot", "Weltraumrakete",
+  "Königspalast", "Angelrute", "Schiffsanker", "Zauberstab", "Geschenkpaket", "Bleistift",
+  "Füllfederhalter", "Radiergummi", "Lineal", "Schere", "Buch", "Postkarte", "Blumentopf", "Sonnenblume",
+  "Rote Rose", "Tulpe", "Fliegenpilz", "Muschel", "Sandburg", "Schlitten", "Schlittschuhe",
+  "Snowboard", "Ski", "Goldmedaille", "Siegerpokal", "Nationalflagge", "Kirchenglocke",
+  "Taschenlampe", "Feuerwerk", "Ziehbrunnen", "Sparschwein", "Goldmünze", "Koffer", "Geldbörse",
+  "Fernseher", "Radio", "Kaffeemaschine", "Toaster", "Mikrowelle", "Kühlschrank",
+  "Waschmaschine", "Staubsauger", "Bügeleisen", "Föhn", "Zahnbürste", "Seifenstück",
+  "Handtuch", "Kissen", "Bettdecke", "Vorhang", "Teppich", "Kamin", "Schaukelstuhl", "Parkbank",
+  "Briefkasten", "Mülleimer", "Leiter", "Schubkarre", "Schaufel", "Rechen", "Gießkanne",
+  "Rasenmäher", "Vogelhaus", "Vogelscheuche", "Sonnenliege", "Sonnenschirm", "Rettungsring",
+  "Rettungsweste", "Surfbrett", "Taucherbrille", "Schwimmflossen", "Kanu", "Kajak", "Paddel",
+  // 100+ Neue Wörter:
+  "Brillenetui", "Schlüsselanhänger", "Schneekugel", "Vorhängeschloss-Schlüssel", "Windspiel", "Gartenzwerg", "Badewanne",
+  "Drachenflieger", "Weihnachtskugel", "Rollschuhe", "Fotorahmen", "Fischernetz", "Tauchermaske",
+  "Schirmständer", "Wunderkerze", "Kaffeekanne", "Sandwichtoaster", "Weinkorken", "Nussknacker",
+  "Tannenzapfen", "Buntstifte", "Zuckerdose", "Teekanne", "Crêpepfanne",
+  "Kunstwerk", "Schatzkarte", "Piratenschiff", "Ritterrüstung", "Kristallkugel", "Zauberbuch",
+  "Geisterhaus", "Raumhelm", "Fliegende Untertasse", "Brettspiel", "Zauberwürfel", "Jojo",
+  "Teddybär", "Gummiente", "Tretboot", "Skisprungschanze", "Kickertisch", "Dartscheibe",
+  "Bowlingkugel", "Tennisschläger", "Boxhandschuh", "Fußballtor", "Basketballkorb", "Meisterschaftspokal",
+  "Wecker", "Sanduhr", "Wanduhr", "Kehrblech", "Hängematte", "Gartengrill",
+  "Kessel", "Campingzelt", "Schlafsack", "Taschenmesser", "Trinkflasche", "Stirnlampe", "Sternbild",
+  "Sternschnuppe", "Nordlicht", "Sonnenfinsternis", "Wetterhahn", "Brieftaube", "Vogelkäfig", "Aquarium"
 ];
 
 const baseTech = [
-  "roboter", "laptop", "smartphone", "tastatur", "maus", "server", "künstliche intelligenz",
-  "wlan", "kopfhörer", "mikrofon", "monitor", "usb-stick", "webcam", "drohne", "vr-brille",
-  "grafikkarte", "prozessor", "mainboard", "festplatte", "netzteil", "drucker", "scanner", "beamer",
-  "lautsprecher", "router", "modem", "glasfaser", "satellit", "teleskop", "mikroskop", "laser", "akku",
-  "ladegerät", "powerbank", "smartwatch", "ohrhörer", "konsole", "joystick", "gamepad", "lenkrad", "pedal",
-  "software", "anwendung", "browser", "firewall", "antivirus", "datenbank", "cloud", "algorithmus", "code",
-  "hacker", "passwort", "verschlüsselung", "pixel", "auflösung", "touchscreen", "biometrie",
-  "supercomputer", "quantencomputer", "3d-drucker", "simulator", "hologramm", "nanobot"
+  "Roboter", "Laptop", "Smartphone", "Tastatur", "Computermaus", "Serverschrank", "WLAN-Router",
+  "Kopfhörer", "Mikrofon", "Computermonitor", "USB-Stick", "Webcam", "Drohne",
+  "VR-Brille", "Grafikkarte", "Prozessor", "Mainboard", "Festplatte",
+  "Farbdrucker", "Scanner", "Beamer", "Bluetooth-Lautsprecher", "Fernmeldesatellit",
+  "Teleskop", "Elektronenmikroskop", "Laserpointer", "Wiederaufladbare Batterie", "Powerbank",
+  "Smartwatch", "Kabellose Ohrhörer", "Spielkonsole", "Joystick", "Lenkrad",
+  "Datenbank", "Cloud-Server", "Quellcode", "Hacker", "Passwort", "Pixel",
+  "Touchscreen", "3D-Drucker", "Hologramm", "Supercomputer", "Glasfaserkabel",
+  "Solarmodul", "Windkraftanlage", "Elektroauto Ladestation", "Quantencomputer",
+  "Künstliche Intelligenz", "Fernbedienung", "USB-Kabel", "HDMI-Anschluss", "Speicherkarte"
 ];
 
 const baseMovies = [
-  "star wars", "harry potter", "avengers", "titanic", "shrek", "matrix", "spiderman", "batman",
-  "joker", "pikachu", "spongebob", "minecraft", "superman", "pirat", "astronaut", "dinosaurier",
-  "vampir", "zombie", "geist", "zauberer", "superheld", "ninja", "drache", "gargoyle", "mumie",
-  "frankenstein", "dracula", "minion", "dumbo", "bambi", "pinocchio", "aschenputtel", "schneewittchen",
-  "dornröschen", "arielle", "aladdin", "herkules", "mulan", "pocahontas", "tarzan", "nemo", "dory",
-  "esel", "der gestiefelte kater", "minions", "gru", "lightning mcqueen", "wall-e", "ratatouille",
-  "kung fu panda", "madagaskar", "eiszeit", "inception", "interstellar", "gladiator"
+  "Spider-Man", "Batman", "Superman", "Joker", "Harry Potter", "Pikachu", "SpongeBob",
+  "Shrek", "Micky Maus", "Donald Duck", "Minions", "Gru", "Darth Vader", "Meister Yoda",
+  "Hulk", "Iron Man", "Thor", "Captain America", "Kapitän Nemo", "Simba der König der Löwen",
+  "Aladdin mit Wunderlampe", "Tarzan", "Dumbo der fliegende Elefant", "Pinocchio", "Aschenputtel",
+  "Schneewittchen", "Ninja-Krieger", "Fluch der Karibik Pirat", "Zauberlehrling", "Superheld",
+  "Feuerspeiender Drache", "Vampir", "Zombie", "Gespenst", "Ägyptische Mumie", "Frankensteins Monster",
+  "T-Rex Dinosaurier", "Robin Hood", "Sherlock Holmes", "Graf Dracula", "Kapitän Jack Sparrow",
+  "Super Mario", "Luigi", "Sonic der Igel", "Pac-Man", "Minecraft Steve", "Elsa Eiskönigin",
+  "Olaf der Schneemann", "Esel aus Shrek", "Der gestiefelte Kater", "Gandalf der Zauberer", "Gollum",
+  "Terminator Roboter", "Gladiator", "Lightning McQueen Rennauto", "Wall-E Roboter", "Ratatouille Koch"
 ];
 
 const baseFood = [
-  "pfannkuchen", "hamburger", "pommes frites", "sandwich", "trauben", "wassermelone", "erdbeere",
-  "banane", "orange", "zitrone", "schokolade", "popcorn", "sushi", "donut", "muffin", "hotdog",
-  "keks", "spaghetti", "taco", "croissant", "eintopf", "fischsuppe", "kohlroulade",
-  "strudel", "waffel", "brownie", "käsekuchen", "cupcake", "nudeln", "ramen", "suppe", "brot",
-  "käse", "butter", "milch", "saft", "tee", "kaffee", "schnitzel", "wurst", "brezel"
+  "Italienische Pizza", "Cheeseburger", "Pfannkuchen mit Ahornsirup", "Knusprige Pommes Frites", "Schinkensandwich",
+  "Hotdog mit Senf", "Glasierter Donut", "Vanilleeis", "Schokomuffin", "Tafel Schokolade",
+  "Buttercroissant", "Spaghetti Bolognese", "Mexikanischer Taco", "Burrito", "Lachs Sushi",
+  "Belgische Waffel", "Apfelstrudel", "Gelbe Banane", "Roter Apfel", "Süße Orange",
+  "Saure Zitrone", "Frische Erdbeere", "Himbeere", "Wassermelonenscheibe", "Honigmelone",
+  "Weintrauben", "Pfirsich", "Pflaume", "Kirsche", "Tropische Ananas", "Grüne Kiwi",
+  "Reife Avocado", "Tomate", "Grüne Paprika", "Gurke", "Karotte", "Maiskolben",
+  "Käse", "Frisches Bauernbrot", "Heißer Espresso", "Zitronen-Eistee",
+  "Heißer Kakao mit Schlagsahne", "Frische Limonade", "Orangensaft", "Butter-Popcorn",
+  "Salzbrezel", "Bienenhonig", "Spiegelei", "Rührei", "Wiener Schnitzel",
+  "Fischsuppe", "Kohlroulade", "Käsekuchen", "Pflaumenknödel",
+  // Neue Leckereien:
+  "Zuckerwatte", "Lebkuchenhaus", "Erdbeersuppe", "Panierter Käse", "Kaiserschmarrn",
+  "Mohnpielen", "Pflaumenkuchen", "Schokofondue", "Bananenshake"
 ];
 
 const baseAnimals = [
-  "elefant", "giraffe", "löwe", "tiger", "pinguin", "delfin", "hai", "krake", "schlange", "frosch",
-  "wal", "adler", "eule", "hahn", "kuh", "pferd", "hase", "einhörnchen", "igel", "schmetterling", "marienkäfer",
-  "biene", "wespe", "ameise", "mücke", "fliege", "spinne", "skorpion", "krokodil", "alligator", "schildkröte",
-  "eidechse", "chamäleon", "leguan", "salamander", "fisch", "goldfisch", "lachs", "forelle", "thunfisch", "wels",
-  "hecht", "karpfen", "aal", "rochen", "seestern", "seeigel", "muschel",
-  "austern", "hummer", "krabbe", "garnele", "tintenfisch", "qualle", "koralle", "walross", "robbe"
-];
-
-function generateExpandedList(baseList, prefixes) {
-  const result = new Set([...baseList]);
-  baseList.forEach(item => {
-    prefixes.forEach(prefix => {
-      result.add(`${prefix} ${item}`);
-    });
-  });
-  return Array.from(result);
-}
-
-const dePrefixes = [
-  "roter", "blauer", "grüner", "gelber", "großer", "kleiner", "fliegender", "magischer", "riesiger", "süßer",
-  "schneller", "langsamer", "alter", "neuer", "bunter", "glänzender", "goldener", "silberner", "super", "geheimer",
-  "wald", "see", "himmel", "nacht", "königs", "eis", "feuer", "plastik", "holz", "metall"
+  "Afrikanischer Löwe", "Gestreifter Tiger", "Riesenelefant", "Große Giraffe", "Schwarz-weißes Zebra",
+  "Schimpanse", "Gorilla", "Brauner Bär", "Eisbär", "Riesenpanda", "Grauer Wolf",
+  "Roter Fuchs", "Kuscheliger Hase", "Eichhörnchen mit Eichel", "Stacheligel", "Fledermaus",
+  "Haushund", "Getigerte Katze", "Galoppierendes Pferd", "Gefleckte Kuh", "Wolliges Schaf", "Hausziege",
+  "Ferkel", "Esel", "Höcker-Kamel", "Lama", "Hüpfendes Känguru", "Koalabär",
+  "Nilkrokodil", "Panzerschildkröte", "Grüne Eidechse", "Chamäleon", "Geringelte Schlange",
+  "Laubfrosch", "Weißkopfseeadler", "Schleiereule", "Wanderfalke", "Bunter Papagei",
+  "Rosa Flamingo", "Eleganter Schwan", "Stockente", "Gans", "Weißstorch", "Rauchschwalbe",
+  "Amsel", "Kaiserpinguin", "Verspielter Delfin", "Blauwal", "Schwertwal Orca",
+  "Weißer Hai", "Stachelrochen", "Achtarmiger Krake", "Riesentintenfisch", "Leuchtende Qualle",
+  "Seestern", "Seepferdchen", "Flusskrebs", "Hummer", "Bunter Schmetterling",
+  "Siebenpunkt-Marienkäfer", "Honigbiene", "Rote Ameise", "Libelle", "Gartenkreuzspinne",
+  "Skorpion", "Geweihträger Hirsch", "Rehkitz", "Wildschwein", "Seehund", "Walross mit Stoßzähnen",
+  "Fischotter", "Biber mit Baumstamm", "Pfau mit Federn", "Pelikan",
+  // Neue Tiere:
+  "Strauß", "Truthahn", "Erdmännchen", "Schnabeltier", "Waschbär", "Faultier",
+  "Känguru", "Pfau", "Kolibri", "Meerschweinchen", "Hamster"
 ];
 
 export const germanWordCategories = {
-  general: generateExpandedList(baseGeneral, dePrefixes),
-  tech: generateExpandedList(baseTech, dePrefixes.slice(0, 10)),
-  movies: generateExpandedList(baseMovies, dePrefixes.slice(0, 10)),
-  food: generateExpandedList(baseFood, dePrefixes.slice(0, 10)),
-  animals: generateExpandedList(baseAnimals, dePrefixes)
+  general: baseGeneral,
+  tech: baseTech,
+  movies: baseMovies,
+  food: baseFood,
+  animals: baseAnimals,
 };
 
 export const germanWords = Array.from(new Set([
-  ...germanWordCategories.general,
-  ...germanWordCategories.tech,
-  ...germanWordCategories.movies,
-  ...germanWordCategories.food,
-  ...germanWordCategories.animals
+  ...baseGeneral,
+  ...baseTech,
+  ...baseMovies,
+  ...baseFood,
+  ...baseAnimals,
 ]));
