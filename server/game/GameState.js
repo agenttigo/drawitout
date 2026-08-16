@@ -217,10 +217,14 @@ export class GameState {
     this.currentRound = 1;
     this.drawerIndex = 0;
     this.galleryArtworks = [];
+    this.canvasStrokes = [];
     this.players.forEach(p => {
       p.score = 0;
       p.roundScore = 0;
     });
+    if (io) {
+      io.to(this.roomId).emit('canvas_clear');
+    }
     this.startWordSelection(io);
     return true;
   }
@@ -232,6 +236,10 @@ export class GameState {
     this.canvasTheme = 'white';
     this.artworkRatings = [];
     
+    if (io) {
+      io.to(this.roomId).emit('canvas_clear');
+    }
+
     this.players.forEach(p => {
       p.isDrawer = false;
       p.hasGuessed = false;
@@ -268,7 +276,7 @@ export class GameState {
       io.to(this.roomId).emit('timer_tick', { timeLeft: this.timeLeft });
 
       if (this.timeLeft <= 0) {
-        const autoWord = this.wordChoices[0] || 'apple';
+        const autoWord = this.wordChoices[0] || 'Naplemente';
         this.selectWord(autoWord, io);
       }
     }, 1000);
@@ -280,9 +288,14 @@ export class GameState {
 
     this.currentWord = word.trim();
     this.hintsRevealed = [];
+    this.canvasStrokes = [];
     this.generateMaskedWord();
     this.state = 'DRAWING';
     this.timeLeft = this.settings.gameMode === 'BLITZ' ? 20 : (parseInt(this.settings.drawTime, 10) || 60);
+
+    if (io) {
+      io.to(this.roomId).emit('canvas_clear');
+    }
 
     io.to(this.roomId).emit('turn_started', {
       drawer: this.getCurrentDrawer(),
@@ -477,10 +490,11 @@ export class GameState {
 
     io.to(this.roomId).emit('game_state_update', this.getPublicState());
 
+    // 3.5 seconds round summary delay as requested by user
     setTimeout(() => {
       this.drawerIndex++;
       this.startWordSelection(io);
-    }, 6000);
+    }, 3500);
   }
 
   endGame(io) {
