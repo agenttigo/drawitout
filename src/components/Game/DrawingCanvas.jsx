@@ -166,6 +166,15 @@ export function DrawingCanvas({
     ctx.restore();
   }, []);
 
+  // Clear canvas whenever drawer changes or turn starts
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setHasDrawnOneStroke(false);
+  }, [isDrawer, roomId]);
+
   useEffect(() => {
     if (!socket) return;
 
@@ -208,12 +217,16 @@ export function DrawingCanvas({
     socket.on('draw_stroke', handleDrawStroke);
     socket.on('canvas_fill', handleCanvasFill);
     socket.on('canvas_clear', handleCanvasClear);
+    socket.on('turn_started', handleCanvasClear);
+    socket.on('turn_ended', handleCanvasClear);
     socket.on('canvas_restore', handleCanvasRestore);
 
     return () => {
       socket.off('draw_stroke', handleDrawStroke);
       socket.off('canvas_fill', handleCanvasFill);
       socket.off('canvas_clear', handleCanvasClear);
+      socket.off('turn_started', handleCanvasClear);
+      socket.off('turn_ended', handleCanvasClear);
       socket.off('canvas_restore', handleCanvasRestore);
     };
   }, [socket, drawSegment]);
