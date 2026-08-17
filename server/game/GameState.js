@@ -297,8 +297,15 @@ export class GameState {
       io.to(this.roomId).emit('canvas_clear');
     }
 
+    const drawer = this.getCurrentDrawer();
+
+    // ALWAYS emit drawer_secret_word directly to drawer
+    if (drawer && io) {
+      io.to(drawer.id).emit('drawer_secret_word', { word: this.currentWord });
+    }
+
     io.to(this.roomId).emit('turn_started', {
-      drawer: this.getCurrentDrawer(),
+      drawer: drawer,
       maskedWord: this.maskedWord,
       drawTime: this.timeLeft,
       currentRound: this.currentRound,
