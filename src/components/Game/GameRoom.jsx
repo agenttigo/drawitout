@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSocket } from '../../context/SocketContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { useDevice } from '../../hooks/useDevice';
@@ -69,12 +69,16 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
   const [unreadChatCount, setUnreadChatCount] = useState(0);
   const [quickGuessInput, setQuickGuessInput] = useState('');
 
+  const handleCloseRoundSummary = useCallback(() => {
+    setRoundSummaryData(null);
+  }, []);
+
   useEffect(() => {
     if (!socket) return;
 
     const handleStateUpdate = (newState) => {
       setGameState(newState);
-      if (newState?.state === 'WORD_SELECTION' || newState?.state === 'DRAWING') {
+      if (newState?.state === 'WORD_SELECTION' || newState?.state === 'DRAWING' || newState?.state === 'GAME_OVER') {
         setRoundSummaryData(null);
       }
       if (newState?.customWords) {
@@ -90,7 +94,12 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
     };
 
     const handleWordChoices = (choices) => {
+      setRoundSummaryData(null);
       setWordChoices(choices);
+    };
+
+    const handleDrawerSecretWord = ({ word }) => {
+      setSecretWord(word);
     };
 
     const handleTurnStarted = ({ drawer, maskedWord, drawTime, currentRound, gameMode }) => {
@@ -107,17 +116,14 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
       ]);
     };
 
-    const handleTurnEnded = ({ secretWord, players, reason, gallery }) => {
-      setRoundSummaryData({ secretWord, players, gallery });
-      setTimeout(() => {
-        setRoundSummaryData(null);
-      }, 3500);
+    const handleTurnEnded = ({ secretWord: endSecretWord, players, reason, gallery }) => {
+      setRoundSummaryData({ secretWord: endSecretWord, players, gallery });
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now(),
           isSystem: true,
-          text: `⏱️ A forduló véget ért! A szó ez volt: "${secretWord}"`,
+          text: `⏱️ A forduló véget ért! A szó ez volt: "${endSecretWord}"`,
         },
       ]);
     };
@@ -134,7 +140,7 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
       ]);
     };
 
-    const handleCorrectGuess = ({ secretWord, points }) => {
+    const handleCorrectGuess = ({ secretWord: correctWord, points }) => {
       soundEngine.playCorrect();
       if (gameState?.timeLeft && (gameState.drawTime - gameState.timeLeft) <= 10) {
         unlockBadge('speedy');
@@ -171,6 +177,7 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
     };
 
     const handleGameOver = ({ leaderboard, gallery }) => {
+      setRoundSummaryData(null);
       setLeaderboard(leaderboard);
       setGameState((prev) => prev ? { ...prev, gallery } : prev);
 
@@ -183,6 +190,7 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
     socket.on('game_state_update', handleStateUpdate);
     socket.on('timer_tick', handleTimerTick);
     socket.on('word_choices', handleWordChoices);
+    socket.on('drawer_secret_word', handleDrawerSecretWord);
     socket.on('turn_started', handleTurnStarted);
     socket.on('turn_ended', handleTurnEnded);
     socket.on('player_guessed', handlePlayerGuessed);
@@ -198,6 +206,7 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
       socket.off('game_state_update', handleStateUpdate);
       socket.off('timer_tick', handleTimerTick);
       socket.off('word_choices', handleWordChoices);
+      socket.off('drawer_secret_word', handleDrawerSecretWord);
       socket.off('turn_started', handleTurnStarted);
       socket.off('turn_ended', handleTurnEnded);
       socket.off('player_guessed', handlePlayerGuessed);
@@ -750,9 +759,17 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
                 {/* Center Column: Canvas */}
                 <div className="col-span-6 relative flex flex-col items-center justify-center w-full">
                   {gameState.state === 'WORD_SELECTION' && !isDrawer && (
-                    <div className="absolute top-4 z-20 px-4 py-2 bg-stone-900/80 backdrop-blur-md rounded-2xl text-white text-xs font-bold flex items-center space-x-2 shadow-lg animate-pulse">
+                    <div className="absolute top-4 z-20 px-4 py-2 bg-stone-900/85 backdrop-blur-md rounded-2xl text-white text-xs font-bold flex items-center space-x-2 shadow-lg animate-pulse">
                       <Clock className="w-4 h-4 text-amber-400" />
                       <span>{gameState.drawer?.name || 'A rajzoló'} éppen szót választ... ({gameState.timeLeft}s)</span>
+                    </div>
+                  )}
+
+                  {/* Drawer banner on Desktop */}
+                  {gameState.state === 'DRAWING' && isDrawer && (
+                    <div className="w-full mb-2 bg-[#eaf2eb] border border-[#c7decb] px-4 py-2 rounded-2xl text-center shadow-xs flex items-center justify-center space-x-2">
+                      <span className="text-xs font-bold text-stone-600">✏️ Te rajzolsz! A szavad:</span>
+                      <strong className="text-base font-black text-[#386641] uppercase tracking-wide">{secretWord || '...'}</strong>
                     </div>
                   )}
 
@@ -787,9 +804,17 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
                 {/* Center Focal Stage: Canvas */}
                 <div className="relative w-full flex flex-col items-center">
                   {gameState.state === 'WORD_SELECTION' && !isDrawer && (
-                    <div className="absolute top-3 z-20 px-3 py-1.5 bg-stone-900/80 backdrop-blur-md rounded-xl text-white text-xs font-bold flex items-center space-x-1.5 shadow-lg animate-pulse">
+                    <div className="absolute top-3 z-20 px-3 py-1.5 bg-stone-900/85 backdrop-blur-md rounded-xl text-white text-xs font-bold flex items-center space-x-1.5 shadow-lg animate-pulse">
                       <Clock className="w-3.5 h-3.5 text-amber-400" />
                       <span>{gameState.drawer?.name || 'A rajzoló'} szót választ ({gameState.timeLeft}s)</span>
+                    </div>
+                  )}
+
+                  {/* Prominent Drawer Word Banner on Mobile */}
+                  {gameState.state === 'DRAWING' && isDrawer && (
+                    <div className="w-full mb-2 bg-[#eaf2eb] border border-[#c7decb] px-3 py-1.5 rounded-xl text-center shadow-xs flex items-center justify-center space-x-1.5">
+                      <span className="text-[11px] font-bold text-stone-600">✏️ Te rajzolsz:</span>
+                      <strong className="text-sm font-black text-[#386641] uppercase tracking-wide">{secretWord || '...'}</strong>
                     </div>
                   )}
 
@@ -977,12 +1002,12 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
         />
       )}
 
-      {roundSummaryData && (
+      {roundSummaryData && gameState.state === 'ROUND_SUMMARY' && (
         <RoundSummaryModal
           secretWord={roundSummaryData.secretWord}
           players={roundSummaryData.players}
           onRateArtwork={handleRateArtwork}
-          onClose={() => setRoundSummaryData(null)}
+          onClose={handleCloseRoundSummary}
         />
       )}
 
