@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 20 540 150" width="100%" height="100%">
+  <defs>
+    <!-- Ergonomic Calm Palette for Dark Backgrounds -->
+    <linearGradient id="primaryGradErgoDark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ea7a3e" />
+      <stop offset="50%" stop-color="#e9c46a" />
+      <stop offset="100%" stop-color="#52a061" />
+    </linearGradient>
+
+    <linearGradient id="penGradErgoDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fcd34d" />
+      <stop offset="100%" stop-color="#ea7a3e" />
+    </linearGradient>
+
+    <filter id="glowErgoDark" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Icon group -->
+  <g transform="translate(30, 28)">
+    <circle cx="65" cy="65" r="55" fill="none" stroke="#333e4d" stroke-width="2" stroke-dasharray="4 4" />
+    <path d="M 25,85 C 45,25 85,105 105,45" fill="none" stroke="url(#primaryGradErgoDark)" stroke-width="8" stroke-linecap="round" filter="url(#glowErgoDark)" />
+    <g transform="translate(103, 42) rotate(-45)">
+      <path d="M 0,0 L 10,-20 L -10,-20 Z" fill="url(#penGradErgoDark)" />
+      <polygon points="0,0 3,-6 -3,-6" fill="#ffffff" />
+      <circle cx="0" cy="0" r="2" fill="#52a061" />
+    </g>
+    <circle cx="25" cy="85" r="5" fill="#ffffff" stroke="#ea7a3e" stroke-width="2.5" />
+    <circle cx="105" cy="45" r="5" fill="#ffffff" stroke="#52a061" stroke-width="2.5" />
+  </g>
+
+  <!-- Typography / Text group -->
+  <g transform="translate(175, 105)">
+    <text font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="54" font-weight="900" fill="#f8fafc" letter-spacing="-1.5">
+      Draw<tspan fill="url(#primaryGradErgoDark)">ItOut</tspan>
+    </text>
+    <text y="32" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="800" fill="#52a061" letter-spacing="3.5">
+      ONLINE MULTIPLAYER DRAWING
+    </text>
+  </g>
+</svg>

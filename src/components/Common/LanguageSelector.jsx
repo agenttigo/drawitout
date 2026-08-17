@@ -11,38 +11,41 @@ export function LanguageSelector({ className = '' }) {
   };
 
   return (
-    <div className={`flex items-center space-x-1.5 bg-white/80 backdrop-blur-md p-1.5 rounded-full border border-slate-300 shadow-sm ${className}`}>
+    <div className={`flex items-center space-x-1 bg-white p-1 rounded-2xl border border-[#e5e0d5] shadow-2xs ${className}`}>
       <button
         type="button"
         onClick={() => handleSelect('hu')}
-        className={`px-3 py-1 rounded-full text-xs font-black transition flex items-center space-x-1 ${
-          lang === 'hu' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-slate-200/70'
+        className={`px-2.5 py-1 rounded-xl text-xs font-black transition flex items-center space-x-1 touch-manipulation ${
+          lang === 'hu' ? 'bg-[#386641] text-white shadow-2xs' : 'text-stone-600 hover:bg-stone-100'
         }`}
+        title="Magyar"
       >
         <span>🇭🇺</span>
-        <span>HU</span>
+        <span className="hidden sm:inline">HU</span>
       </button>
 
       <button
         type="button"
         onClick={() => handleSelect('en')}
-        className={`px-3 py-1 rounded-full text-xs font-black transition flex items-center space-x-1 ${
-          lang === 'en' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-slate-200/70'
+        className={`px-2.5 py-1 rounded-xl text-xs font-black transition flex items-center space-x-1 touch-manipulation ${
+          lang === 'en' ? 'bg-[#386641] text-white shadow-2xs' : 'text-stone-600 hover:bg-stone-100'
         }`}
+        title="English"
       >
         <span>🇬🇧</span>
-        <span>EN</span>
+        <span className="hidden sm:inline">EN</span>
       </button>
 
       <button
         type="button"
         onClick={() => handleSelect('de')}
-        className={`px-3 py-1 rounded-full text-xs font-black transition flex items-center space-x-1 ${
-          lang === 'de' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-slate-200/70'
+        className={`px-2.5 py-1 rounded-xl text-xs font-black transition flex items-center space-x-1 touch-manipulation ${
+          lang === 'de' ? 'bg-[#386641] text-white shadow-2xs' : 'text-stone-600 hover:bg-stone-100'
         }`}
+        title="Deutsch"
       >
         <span>🇩🇪</span>
-        <span>DE</span>
+        <span className="hidden sm:inline">DE</span>
       </button>
     </div>
   );

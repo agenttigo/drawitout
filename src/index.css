@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -12,6 +14,12 @@
     color: #1e242b;
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html.dark, body.dark, html.dark body {
+    background-color: #121518 !important;
+    color: #f1f5f9 !important;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -19,13 +27,21 @@
   }
 }
 
-/* Eye-Friendly & Ergonomic Glassmorphism utilities */
+/* Glassmorphism & Panel Styling */
 .glass-panel {
-  background: rgba(255, 254, 250, 0.97);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1.5px solid #e5e0d5;
   box-shadow: 0 10px 30px -5px rgba(30, 36, 43, 0.05), 0 4px 12px -2px rgba(30, 36, 43, 0.03);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.dark .glass-panel {
+  background: rgba(24, 31, 40, 0.96) !important;
+  border-color: #2d3848 !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 4px 12px -2px rgba(0, 0, 0, 0.4) !important;
 }
 
 .glass-card {
@@ -33,6 +49,13 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid #e2ddd3;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.dark .glass-card {
+  background: rgba(30, 39, 51, 0.95) !important;
+  border-color: #334155 !important;
+  color: #f1f5f9 !important;
 }
 
 .glass-card:hover {
@@ -40,7 +63,155 @@
   box-shadow: 0 4px 16px rgba(56, 102, 65, 0.08);
 }
 
-/* Custom Scrollbars in Muted Sage & Sand */
+.dark .glass-card:hover {
+  border-color: #52a061 !important;
+  box-shadow: 0 4px 16px rgba(82, 160, 97, 0.2) !important;
+}
+
+/* ============================================================ */
+/* DRAWING CANVAS STYLING - ALWAYS CRISP WHITE PAPER */
+/* ============================================================ */
+.drawing-board,
+.canvas-paper,
+.drawing-board-wrapper .canvas-paper,
+.dark .drawing-board,
+.dark .canvas-paper,
+.dark .drawing-board-wrapper .canvas-paper {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+}
+
+.canvas-overlay,
+canvas.canvas-overlay,
+.dark .canvas-overlay,
+.dark canvas.canvas-overlay {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+canvas:not(.canvas-overlay) {
+  background-color: #ffffff;
+}
+
+.dark .drawing-board-wrapper {
+  background: #181f28 !important;
+  border-color: #386641 !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(82, 160, 97, 0.15) !important;
+}
+
+/* ============================================================ */
+/* DARK MODE THEME SYSTEM OVERRIDES */
+/* ============================================================ */
+.dark .min-h-screen {
+  background-color: #121518 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Text readability in dark mode */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: #f8fafc !important;
+}
+
+.dark .text-stone-900,
+.dark .text-stone-800,
+.dark .text-stone-700,
+.dark .text-\[\#1e242b\],
+.dark .text-\[\#2b3036\],
+.dark .text-\[\#343a40\] {
+  color: #f1f5f9 !important;
+}
+
+.dark .text-stone-600,
+.dark .text-stone-500 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-stone-400 {
+  color: #94a3b8 !important;
+}
+
+/* Containers and cards */
+.dark .bg-white:not(.canvas-paper):not(canvas):not(.drawing-board) {
+  background-color: #181f28 !important;
+  color: #f1f5f9 !important;
+  border-color: #2d3848 !important;
+}
+
+.dark .bg-\[\#faf8f3\]:not(.canvas-paper),
+.dark .bg-\[\#f7f5f0\],
+.dark .bg-\[\#f9f6f0\],
+.dark .bg-\[\#f0ebe1\],
+.dark .bg-stone-50,
+.dark .bg-stone-100 {
+  background-color: #1c2530 !important;
+  color: #f1f5f9 !important;
+  border-color: #2d3848 !important;
+}
+
+.dark .hover\:bg-stone-100:hover,
+.dark .hover\:bg-stone-200:hover,
+.dark .hover\:bg-\[\#faf8f3\]:hover {
+  background-color: #253140 !important;
+  color: #ffffff !important;
+}
+
+.dark .border-\[\#e5e0d5\],
+.dark .border-\[\#d8d3c5\],
+.dark .border-\[\#d8d1c2\],
+.dark .border-\[\#dcd5c8\],
+.dark .border-stone-200,
+.dark .border-stone-300 {
+  border-color: #2d3848 !important;
+}
+
+/* Accent badges & buttons in dark mode */
+.dark .bg-\[\#eaf2eb\],
+.dark .bg-\[\#eaf2eb\]\/60,
+.dark .bg-\[\#eaf2eb\]\/70 {
+  background-color: rgba(46, 89, 54, 0.35) !important;
+  border-color: #386641 !important;
+  color: #6ee7b7 !important;
+}
+
+.dark .text-\[\#2c5234\],
+.dark .text-\[\#386641\] {
+  color: #6ee7b7 !important;
+}
+
+.dark .bg-\[\#fff8eb\] {
+  background-color: rgba(180, 83, 9, 0.25) !important;
+  border-color: #b45309 !important;
+  color: #fcd34d !important;
+}
+
+.dark .text-\[\#c86d3b\] {
+  color: #fb923c !important;
+}
+
+.dark .bg-\[\#fdf0f0\],
+.dark .bg-\[\#fcf0f0\] {
+  background-color: rgba(185, 28, 28, 0.25) !important;
+  border-color: #991b1b !important;
+  color: #fca5a5 !important;
+}
+
+/* Inputs & selects in dark mode */
+.dark input[type="text"],
+.dark input[type="number"],
+.dark textarea,
+.dark select {
+  background-color: #141b24 !important;
+  color: #f8fafc !important;
+  border-color: #2d3848 !important;
+}
+
+.dark input[type="text"]:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: #52a061 !important;
+}
+
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -48,12 +219,21 @@
 ::-webkit-scrollbar-track {
   background: rgba(240, 236, 228, 0.8);
 }
+.dark ::-webkit-scrollbar-track {
+  background: rgba(24, 31, 40, 0.8);
+}
 ::-webkit-scrollbar-thumb {
   background: rgba(56, 102, 65, 0.35);
   border-radius: 9999px;
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(82, 160, 97, 0.45);
+}
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(56, 102, 65, 0.65);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(82, 160, 97, 0.75);
 }
 
 /* Touch & Mobile Optimizations */
@@ -77,6 +257,12 @@ button, a, input, select {
   100% { transform: translateY(-160px) scale(1.4); opacity: 0; }
 }
 
+@keyframes slideDown {
+  0% { transform: translate(-50%, -100px); }
+  60% { transform: translate(-50%, 10px); }
+  100% { transform: translate(-50%, 0px); }
+}
+
 .animate-float {
   animation: float 5s ease-in-out infinite;
 }
@@ -87,6 +273,10 @@ button, a, input, select {
 
 .animate-fly-up {
   animation: flyUp 2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 /* Canvas cursor */

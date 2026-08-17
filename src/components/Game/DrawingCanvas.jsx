@@ -166,12 +166,18 @@ export function DrawingCanvas({
     ctx.restore();
   }, []);
 
+  const initWhiteCanvas = (ctx, w, h) => {
+    if (!ctx) return;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, w, h);
+  };
+
   // Clear canvas whenever drawer changes or turn starts
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    initWhiteCanvas(ctx, canvas.width, canvas.height);
     setHasDrawnOneStroke(false);
   }, [isDrawer, roomId]);
 
@@ -196,7 +202,7 @@ export function DrawingCanvas({
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      initWhiteCanvas(ctx, canvas.width, canvas.height);
       setHasDrawnOneStroke(false);
     };
 
@@ -204,7 +210,7 @@ export function DrawingCanvas({
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      initWhiteCanvas(ctx, canvas.width, canvas.height);
       strokes.forEach((item) => {
         if (item.type === 'fill') {
           floodFill(ctx, item.x, item.y, item.color);
@@ -388,7 +394,7 @@ export function DrawingCanvas({
   return (
     <div className="w-full flex flex-col items-center space-y-2.5 relative">
       {/* Canvas Box - Strictly White Always & Touch-Action None */}
-      <div className="relative w-full aspect-[4/3] max-h-[70vh] md:max-h-[640px] rounded-2xl overflow-hidden glass-panel border-2 border-amber-200/80 shadow-md flex items-center justify-center bg-white touch-none">
+      <div className="drawing-board-wrapper relative w-full aspect-[4/3] max-h-[70vh] md:max-h-[640px] rounded-2xl overflow-hidden border-2 border-[#e5e0d5] dark:border-[#386641] shadow-md flex items-center justify-center bg-white touch-none">
         <canvas
           ref={canvasRef}
           width={800}
@@ -402,7 +408,7 @@ export function DrawingCanvas({
           onTouchEnd={stopDrawing}
           onTouchCancel={stopDrawing}
           style={{ touchAction: 'none' }}
-          className={`w-full h-full object-contain bg-white touch-none ${
+          className={`canvas-paper w-full h-full object-contain bg-white touch-none ${
             isDrawer
               ? activeTool === 'fill'
                 ? 'canvas-cursor-fill'

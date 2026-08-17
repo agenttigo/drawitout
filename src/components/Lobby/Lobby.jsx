@@ -1,49 +1,58 @@
 import React, { useState } from 'react';
 import { useSocket } from '../../context/SocketContext';
 import { useLanguage } from '../../context/LanguageContext';
+import { useTheme } from '../../context/ThemeContext';
+import { LanguageSelector } from '../Common/LanguageSelector';
+import { ThemeToggle } from '../Common/ThemeToggle';
 import { AvatarBuilder } from './AvatarBuilder';
 import { HowToPlayModal } from './HowToPlayModal';
 import { AboutModal } from './AboutModal';
-import { LanguageSelector } from '../Common/LanguageSelector';
+import { AchievementsModal } from './AchievementsModal';
 import { Footer } from '../Common/Footer';
-import { getRandomAvatar } from '../../utils/avatarGenerator';
 import { soundEngine } from '../../utils/soundEngine';
-import { Palette, Play, Users, PlusCircle, Sparkles, HelpCircle, Heart, Key, ArrowRight, X } from 'lucide-react';
+import {
+  Palette,
+  PlusCircle,
+  Key,
+  Trophy,
+  HelpCircle,
+  Info,
+  Film,
+} from 'lucide-react';
 
-export function Lobby({ onRoomJoined, onStartSandbox }) {
+const SAVED_NAME_KEY = 'drawitout_player_name';
+const SAVED_AVATAR_KEY = 'drawitout_player_avatar';
+
+export function Lobby({ onRoomJoined, onStartSandbox, onStartStudio }) {
   const { socket, isConnected } = useSocket();
   const { t } = useLanguage();
+  const { isDark } = useTheme();
 
-  const [playerName, setPlayerName] = useState(() => localStorage.getItem('drawitout_name') || 'Művész' + Math.floor(Math.random() * 100));
+  const [playerName, setPlayerName] = useState(() => {
+    return localStorage.getItem(SAVED_NAME_KEY) || 'Művész';
+  });
+
   const [avatar, setAvatar] = useState(() => {
     try {
-      const saved = localStorage.getItem('drawitout_avatar');
-      return saved ? JSON.parse(saved) : getRandomAvatar();
-    } catch (e) {
-      return getRandomAvatar();
+      const saved = localStorage.getItem(SAVED_AVATAR_KEY);
+      return saved ? JSON.parse(saved) : { color: '#fcd34d', costume: 'none', item: 'none', eyes: 'default', mouth: 'happy' };
+    } catch {
+      return { color: '#fcd34d', costume: 'none', item: 'none', eyes: 'default', mouth: 'happy' };
     }
   });
 
-  const [showHowToPlay, setShowHowToPlay] = useState(false);
-  const [showAbout, setShowAbout] = useState(false);
-  const [showJoinModal, setShowJoinModal] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return !!params.get('room');
-  });
-
-  const [roomCodeInput, setRoomCodeInput] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return (params.get('room') || '').toUpperCase();
-  });
-
+  const [roomCodeInput, setRoomCodeInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [showAchievements, setShowAchievements] = useState(false);
+  const [showJoinModal, setShowJoinModal] = useState(false);
+
   const saveProfile = (name, av) => {
-    setPlayerName(name);
-    setAvatar(av);
-    localStorage.setItem('drawitout_name', name);
-    localStorage.setItem('drawitout_avatar', JSON.stringify(av));
+    localStorage.setItem(SAVED_NAME_KEY, name);
+    localStorage.setItem(SAVED_AVATAR_KEY, JSON.stringify(av));
   };
 
   const handleCreateRoom = () => {
@@ -118,76 +127,76 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
       (response) => {
         setLoading(false);
         if (response.success) {
-          setShowJoinModal(false);
           onRoomJoined(response.room);
         } else {
-          setErrorMessage(response.error || 'A csatlakozás nem sikerült.');
+          setErrorMessage(response.error || 'Nem sikerült csatlakozni a szobához.');
         }
       }
     );
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-between p-2.5 sm:p-4 md:p-6 relative overflow-x-hidden bg-[#f7f5f0] text-[#1e242b]">
-      {/* Gentle, Eye-Friendly Ambient Glows */}
-      <div className="absolute top-1/4 left-1/4 w-72 md:w-96 h-72 md:h-96 bg-[#e2ddd3]/40 rounded-full blur-3xl pointer-events-none animate-float" />
-      <div className="absolute bottom-1/4 right-1/4 w-72 md:w-96 h-72 md:h-96 bg-[#d4c9b8]/30 rounded-full blur-3xl pointer-events-none animate-glow" />
+    <div className="min-h-screen w-full p-2.5 sm:p-4 md:p-6 bg-[#f7f5f0] dark:bg-[#121518] text-[#1e242b] dark:text-[#f1f5f9] flex flex-col items-center justify-between relative overflow-x-hidden transition-colors duration-200">
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#e5e0d5]/50 dark:bg-[#386641]/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Top Navbar with Language Selector */}
-      <div className="w-full max-w-[960px] flex items-center justify-between z-20 mb-2">
-        <div className="flex items-center space-x-1.5">
-          <button
-            type="button"
-            onClick={() => { soundEngine.playClick(); setShowHowToPlay(true); }}
-            className="px-2.5 py-1.5 md:px-3.5 md:py-1.5 rounded-full bg-[#f0ebe1] hover:bg-[#e7e1d5] border border-[#dcd5c8] text-[#2c333a] text-xs font-bold flex items-center space-x-1 transition touch-manipulation active:scale-95"
-          >
-            <HelpCircle className="w-3.5 h-3.5 text-[#4a7c59]" />
-            <span className="hidden xs:inline">{t('how_to_play')}</span>
-          </button>
+      {/* Top Centered Icon Bar */}
+      <div className="w-full max-w-[960px] flex items-center justify-center space-x-2 sm:space-x-3 relative z-10">
+        <button
+          type="button"
+          onClick={() => { soundEngine.playClick(); setShowAchievements(true); }}
+          className="p-2.5 rounded-2xl bg-white dark:bg-[#1c232d] border border-[#e5e0d5] dark:border-[#333e4d] text-[#2b3036] dark:text-stone-200 hover:bg-[#faf8f3] dark:hover:bg-[#252f3d] hover:border-[#386641] dark:hover:border-[#52a061] shadow-2xs transition flex items-center justify-center touch-manipulation group active:scale-95"
+          title={t('achievements_title')}
+        >
+          <Trophy className="w-4.5 h-4.5 text-[#e9c46a] group-hover:scale-110 transition-transform" />
+        </button>
 
-          <button
-            type="button"
-            onClick={() => { soundEngine.playClick(); setShowAbout(true); }}
-            className="px-2.5 py-1.5 md:px-3.5 md:py-1.5 rounded-full bg-[#eaf2eb] hover:bg-[#deede0] border border-[#c7decb] text-[#2c5234] text-xs font-bold flex items-center space-x-1 transition touch-manipulation active:scale-95"
-          >
-            <Heart className="w-3.5 h-3.5 fill-current text-[#386641]" />
-            <span className="hidden xs:inline">{t('about_us')}</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => { soundEngine.playClick(); setShowHowToPlay(true); }}
+          className="p-2.5 rounded-2xl bg-white dark:bg-[#1c232d] border border-[#e5e0d5] dark:border-[#333e4d] text-[#2b3036] dark:text-stone-200 hover:bg-[#faf8f3] dark:hover:bg-[#252f3d] hover:border-[#386641] dark:hover:border-[#52a061] shadow-2xs transition flex items-center justify-center touch-manipulation group active:scale-95"
+          title={t('how_to_play')}
+        >
+          <HelpCircle className="w-4.5 h-4.5 text-[#386641] dark:text-[#52a061] group-hover:scale-110 transition-transform" />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => { soundEngine.playClick(); setShowAbout(true); }}
+          className="p-2.5 rounded-2xl bg-white dark:bg-[#1c232d] border border-[#e5e0d5] dark:border-[#333e4d] text-[#2b3036] dark:text-stone-200 hover:bg-[#faf8f3] dark:hover:bg-[#252f3d] hover:border-[#386641] dark:hover:border-[#52a061] shadow-2xs transition flex items-center justify-center touch-manipulation group active:scale-95"
+          title={t('about_us')}
+        >
+          <Info className="w-4.5 h-4.5 text-[#c86d3b] dark:text-[#ea7a3e] group-hover:scale-110 transition-transform" />
+        </button>
+
+        <ThemeToggle />
 
         <LanguageSelector />
       </div>
 
-      <div className="w-full max-w-[960px] glass-panel rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl relative z-10 space-y-4 md:space-y-6 my-auto border border-[#e5e0d5] bg-white/95">
-        {/* Header Branding */}
-        <div className="flex flex-col items-center space-y-2">
-          {/* Light Theme SVG App Logo Banner */}
-          <div className="w-full max-w-[260px] sm:max-w-xs md:max-w-sm hover:scale-[1.01] transition-transform duration-300">
-            <img src="/logo-light.svg" alt="DrawItOut Logo" className="w-full h-auto drop-shadow-xs" />
-          </div>
-
-          <p className="text-[#576270] text-xs md:text-sm max-w-md mx-auto font-medium text-center">
+      {/* Hero & Profile Section */}
+      <div className="w-full max-w-[960px] my-auto py-2 sm:py-4 flex flex-col space-y-3 sm:space-y-4 relative z-10">
+        <div className="text-center space-y-2 flex flex-col items-center">
+          <img
+            src={isDark ? '/logo-dark.svg' : '/logo-light.svg'}
+            alt="DrawItOut Brand"
+            className="h-16 sm:h-22 w-auto object-contain filter drop-shadow-xs"
+          />
+          <p className="text-xs sm:text-sm md:text-base text-stone-600 dark:text-stone-400 font-semibold max-w-lg mx-auto px-2">
             {t('app_subtitle')}
           </p>
         </div>
 
-        {!isConnected && (
-          <div className="bg-[#fff9eb] border border-[#f3e3b3] text-[#8a6d1b] px-3 py-2 rounded-xl text-xs md:text-sm text-center font-bold animate-pulse">
-            ⚠️ Kapcsolódás a szerverhez... Kérlek várj egy pillanatot!
-          </div>
-        )}
-
         {errorMessage && (
-          <div className="bg-[#fcf0f0] border border-[#f5c6c6] text-[#b93838] px-3 py-2 rounded-xl text-xs md:text-sm text-center font-bold">
+          <div className="bg-[#fcf0f0] dark:bg-[#3d1a1a] border border-[#f5c6c6] dark:border-[#7a2e2e] text-[#b93838] dark:text-[#fca5a5] px-3 py-2 rounded-xl text-xs md:text-sm text-center font-bold">
             {errorMessage}
           </div>
         )}
 
         {/* Central Profile Builder */}
-        <div className="glass-card rounded-2xl p-3.5 sm:p-5 md:p-6 space-y-4 border border-[#e5e0d5] bg-[#faf8f3]">
+        <div className="glass-card rounded-2xl p-3.5 sm:p-5 md:p-6 space-y-4 border border-[#e5e0d5] dark:border-[#333e4d] bg-[#faf8f3] dark:bg-[#161b22]">
           <div className="max-w-md mx-auto space-y-3 md:space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#343a40] mb-1">
+              <label className="block text-xs font-bold text-[#343a40] dark:text-stone-300 mb-1">
                 {t('player_name')}
               </label>
               <input
@@ -196,7 +205,7 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 placeholder={t('player_name_placeholder')}
-                className="w-full bg-white border border-[#d8d3c5] rounded-xl px-4 py-2.5 text-[#1e242b] font-bold text-center text-base focus:outline-none focus:border-[#386641] focus:ring-2 focus:ring-[#386641]/15 transition shadow-2xs"
+                className="w-full bg-white dark:bg-[#1c232d] border border-[#d8d3c5] dark:border-[#333e4d] rounded-xl px-4 py-2.5 text-[#1e242b] dark:text-white font-bold text-center text-base focus:outline-none focus:border-[#386641] dark:focus:border-[#52a061] focus:ring-2 focus:ring-[#386641]/15 transition shadow-2xs"
               />
             </div>
 
@@ -204,9 +213,36 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
           </div>
         </div>
 
-        {/* Three Action Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3 md:gap-4 pt-1">
-          {/* 1. Practice Solo */}
+        {/* Main Action Buttons (Multiplayer Gameplay as Primary Focus) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 pt-1">
+          {/* 1. Create Room (Main Green) */}
+          <button
+            type="button"
+            onClick={handleCreateRoom}
+            disabled={loading || !isConnected}
+            className="py-4 px-5 rounded-2xl bg-[#386641] hover:bg-[#2d5234] dark:bg-[#2e5936] dark:hover:bg-[#386641] text-white font-black text-sm md:text-base shadow-md shadow-[#386641]/20 transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 flex items-center justify-center space-x-2.5 touch-manipulation"
+          >
+            <PlusCircle className="w-5 h-5" />
+            <span>{loading ? '...' : t('create_room_btn')}</span>
+          </button>
+
+          {/* 2. Join with Code (Main Terracotta) */}
+          <button
+            type="button"
+            onClick={() => {
+              soundEngine.playClick();
+              setShowJoinModal(true);
+            }}
+            className="py-4 px-5 rounded-2xl bg-[#c86d3b] hover:bg-[#b05d2f] dark:bg-[#b55c2d] dark:hover:bg-[#c86d3b] text-white font-black text-sm md:text-base shadow-md shadow-[#c86d3b]/20 transition hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2.5 touch-manipulation"
+          >
+            <Key className="w-5 h-5" />
+            <span>{t('join_room_tab')}</span>
+          </button>
+        </div>
+
+        {/* Secondary Modes Row (Solo Practice & Creator Studio) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-0.5">
+          {/* Practice Solo */}
           <button
             type="button"
             onClick={() => {
@@ -214,34 +250,28 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
               saveProfile(playerName, avatar);
               onStartSandbox(playerName, avatar);
             }}
-            className="py-3.5 px-4 rounded-2xl bg-[#f4efe6] hover:bg-[#eae3d5] text-[#2b3036] font-bold text-xs sm:text-sm border border-[#d8d1c2] transition hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 shadow-2xs touch-manipulation"
+            className="py-3 px-4 rounded-2xl bg-white dark:bg-[#1c232d] hover:bg-stone-100/80 dark:hover:bg-[#252f3d] text-[#2b3036] dark:text-stone-200 font-bold text-xs sm:text-sm border border-[#d8d1c2] dark:border-[#333e4d] transition flex items-center justify-center space-x-2 shadow-2xs touch-manipulation"
           >
-            <Palette className="w-4.5 h-4.5 text-[#386641]" />
+            <Palette className="w-4 h-4 text-[#386641] dark:text-[#52a061]" />
             <span>{t('practice_solo')}</span>
           </button>
 
-          {/* 2. Create Room */}
-          <button
-            type="button"
-            onClick={handleCreateRoom}
-            disabled={loading || !isConnected}
-            className="py-3.5 px-4 rounded-2xl bg-[#386641] hover:bg-[#2d5234] text-white font-extrabold text-xs sm:text-sm shadow-md shadow-[#386641]/20 transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 flex items-center justify-center space-x-2 touch-manipulation"
-          >
-            <PlusCircle className="w-4.5 h-4.5" />
-            <span>{loading ? '...' : t('create_room_btn')}</span>
-          </button>
-
-          {/* 3. Join with Code */}
+          {/* Creator Studio Pro (Extra Feature) */}
           <button
             type="button"
             onClick={() => {
               soundEngine.playClick();
-              setShowJoinModal(true);
+              saveProfile(playerName, avatar);
+              if (onStartStudio) {
+                onStartStudio(playerName, avatar);
+              } else {
+                onStartSandbox(playerName, avatar);
+              }
             }}
-            className="py-3.5 px-4 rounded-2xl bg-[#c86d3b] hover:bg-[#b05d2f] text-white font-extrabold text-xs sm:text-sm shadow-md shadow-[#c86d3b]/20 transition hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 touch-manipulation"
+            className="py-3 px-4 rounded-2xl bg-white dark:bg-[#1c232d] hover:bg-[#eaf2eb] dark:hover:bg-[#252f3d] text-[#2b3036] dark:text-stone-200 hover:text-[#2c5234] dark:hover:text-[#52a061] font-bold text-xs sm:text-sm border border-[#d8d1c2] dark:border-[#333e4d] hover:border-[#386641] dark:hover:border-[#52a061] transition flex items-center justify-center space-x-2 shadow-2xs touch-manipulation"
           >
-            <Key className="w-4.5 h-4.5" />
-            <span>{t('join_room_tab')}</span>
+            <Film className="w-4 h-4 text-[#386641] dark:text-[#52a061]" />
+            <span>{t('studio_tab_btn')}</span>
           </button>
         </div>
       </div>
@@ -253,21 +283,23 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
 
       {/* Join Room Code Modal */}
       {showJoinModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/50 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-md glass-panel rounded-3xl p-5 md:p-8 border border-[#e5e0d5] text-[#1e242b] bg-white relative shadow-xl space-y-5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-md glass-panel rounded-3xl p-5 md:p-8 border border-[#e5e0d5] dark:border-[#333e4d] text-[#1e242b] dark:text-[#f1f5f9] bg-white dark:bg-[#1c232d] relative shadow-xl space-y-5">
             <button
               onClick={() => setShowJoinModal(false)}
-              className="absolute top-4 right-4 p-2 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-100 transition touch-manipulation"
+              className="absolute top-4 right-4 p-2 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition touch-manipulation"
             >
-              <X className="w-5 h-5" />
+              ✕
             </button>
 
-            <div className="text-center space-y-1">
-              <div className="w-12 h-12 rounded-2xl bg-[#eaf2eb] text-[#386641] flex items-center justify-center mx-auto mb-2">
+            <div className="space-y-1 text-center">
+              <div className="p-3 bg-[#fff8eb] dark:bg-[#3d2c1e] rounded-2xl text-[#c86d3b] dark:text-[#ea7a3e] inline-block shadow-2xs mb-1">
                 <Key className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-[#1e242b]">{t('join_room_tab')}</h3>
-              <p className="text-xs text-stone-500 font-semibold">{t('room_code_label')}</p>
+              <h3 className="text-xl font-bold text-[#1e242b] dark:text-white">{t('join_room_tab')}</h3>
+              <p className="text-xs text-stone-500 dark:text-stone-400 font-semibold">
+                Add meg a barátodtól kapott 6 betűs szobakódot!
+              </p>
             </div>
 
             <form onSubmit={handleJoinRoom} className="space-y-4">
@@ -276,26 +308,26 @@ export function Lobby({ onRoomJoined, onStartSandbox }) {
                 maxLength={6}
                 value={roomCodeInput}
                 onChange={(e) => setRoomCodeInput(e.target.value.toUpperCase())}
-                placeholder={t('room_code_placeholder')}
-                className="w-full bg-[#f9f8f5] border-2 border-[#dcd5c8] rounded-2xl px-4 py-3.5 md:py-4 text-center text-2xl font-black tracking-widest text-[#386641] uppercase focus:outline-none focus:border-[#386641] focus:bg-white transition"
+                placeholder="PL: PLYCF6"
+                className="w-full bg-[#faf8f3] dark:bg-[#161b22] border-2 border-stone-200 dark:border-[#333e4d] rounded-2xl py-3 px-4 text-center text-xl font-mono font-black tracking-widest text-[#1e242b] dark:text-white focus:border-[#386641] dark:focus:border-[#52a061] focus:outline-none transition shadow-inner"
               />
 
               <button
                 type="submit"
-                disabled={loading || !roomCodeInput.trim()}
-                className="w-full py-3.5 px-6 rounded-2xl bg-[#386641] hover:bg-[#2d5234] text-white font-extrabold text-xs md:text-sm shadow-md transition disabled:opacity-50 flex items-center justify-center space-x-2 touch-manipulation"
+                disabled={loading || !roomCodeInput.trim() || !isConnected}
+                className="w-full py-3.5 rounded-2xl bg-[#386641] hover:bg-[#2d5234] text-white font-bold text-sm shadow-md transition disabled:opacity-50 touch-manipulation"
               >
-                <span>{loading ? '...' : t('join_room_btn')}</span>
-                <ArrowRight className="w-4 h-4" />
+                {loading ? '...' : t('join_room_btn')}
               </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* How to Play & About Modals */}
+      {/* Modals */}
       {showHowToPlay && <HowToPlayModal onClose={() => setShowHowToPlay(false)} />}
       {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
+      {showAchievements && <AchievementsModal onClose={() => setShowAchievements(false)} />}
     </div>
   );
 }

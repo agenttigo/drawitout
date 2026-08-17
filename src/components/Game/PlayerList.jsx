@@ -28,17 +28,17 @@ export function PlayerList({
   };
 
   return (
-    <div className="w-full h-full glass-panel rounded-2xl p-4 flex flex-col justify-between space-y-4 border border-[#e5e0d5] shadow-sm bg-white text-[#1e242b]">
+    <div className="w-full h-full glass-panel rounded-2xl p-4 flex flex-col justify-between space-y-4 border border-[#e5e0d5] dark:border-[#333e4d] shadow-sm bg-white dark:bg-[#161b22] text-[#1e242b] dark:text-[#f1f5f9]">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-stone-200 pb-3">
+      <div className="flex items-center justify-between border-b border-stone-200 dark:border-[#333e4d] pb-3">
         <div className="flex items-center space-x-2">
-          <Trophy className="w-4.5 h-4.5 text-[#c86d3b]" />
-          <h3 className="font-bold text-[#1e242b] text-xs md:text-sm">
+          <Trophy className="w-4.5 h-4.5 text-[#c86d3b] dark:text-[#ea7a3e]" />
+          <h3 className="font-bold text-[#1e242b] dark:text-white text-xs md:text-sm">
             {t('players_leaderboard')}
           </h3>
         </div>
 
-        <span className="text-[11px] font-semibold text-stone-600 bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">
+        <span className="text-[11px] font-semibold text-stone-600 dark:text-stone-300 bg-stone-100 dark:bg-[#1c232d] px-2 py-0.5 rounded-full border border-stone-200 dark:border-[#333e4d]">
           {t('players_count', { count: players.length })}
         </span>
       </div>
@@ -54,32 +54,32 @@ export function PlayerList({
               key={player.id}
               className={`p-2.5 rounded-xl border transition-all flex items-center justify-between ${
                 isDrawer
-                  ? 'bg-[#eaf2eb] border-[#c7decb] text-[#2c5234] font-bold shadow-2xs'
+                  ? 'bg-[#eaf2eb] dark:bg-[#1f3323] border-[#c7decb] dark:border-[#2e5936] text-[#2c5234] dark:text-[#6ee7b7] font-bold shadow-2xs'
                   : player.hasGuessed
-                  ? 'bg-[#f4efe6] border-[#d8d1c2] text-[#2b3036] font-semibold'
+                  ? 'bg-[#f4efe6] dark:bg-[#252a33] border-[#d8d1c2] dark:border-[#384252] text-[#2b3036] dark:text-[#e2e8f0] font-semibold'
                   : isMe
-                  ? 'bg-[#f7f3ec] border-[#e2ded4] text-[#1e242b] font-bold'
-                  : 'bg-stone-50 border-stone-200 text-stone-700'
+                  ? 'bg-[#f7f3ec] dark:bg-[#222a36] border-[#e2ded4] dark:border-[#3c4a5c] text-[#1e242b] dark:text-white font-bold'
+                  : 'bg-stone-50 dark:bg-[#1c232d] border-stone-200 dark:border-[#333e4d] text-stone-700 dark:text-stone-300'
               }`}
             >
               {/* Left Side: Rank & Avatar & Name */}
               <div className="flex items-center space-x-2 min-w-0">
-                <span className="text-xs font-bold text-stone-500 w-4 text-center">
+                <span className="text-xs font-bold text-stone-500 dark:text-stone-400 w-4 text-center">
                   #{index + 1}
                 </span>
 
-                <div className="w-8 h-8 rounded-xl overflow-hidden bg-white flex items-center justify-center border border-stone-200 flex-shrink-0">
+                <div className="w-8 h-8 rounded-xl overflow-hidden bg-white dark:bg-[#121518] flex items-center justify-center border border-stone-200 dark:border-[#333e4d] flex-shrink-0">
                   <AvatarRenderer avatar={player.avatar} size={26} />
                 </div>
 
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center space-x-1">
-                    <span className="font-bold text-xs truncate max-w-[90px] md:max-w-[110px]">
+                    <span className="font-bold text-xs text-[#1e242b] dark:text-white truncate max-w-[90px] md:max-w-[110px]">
                       {player.name}
                     </span>
 
                     {isMe && (
-                      <span className="text-[10px] text-[#386641] font-bold">
+                      <span className="text-[10px] text-[#386641] dark:text-[#52a061] font-bold">
                         {t('you_tag')}
                       </span>
                     )}
@@ -92,13 +92,13 @@ export function PlayerList({
                   {/* Status Badges */}
                   <div className="flex items-center space-x-1">
                     {isDrawer && (
-                      <span className="text-[9px] bg-[#386641] text-white px-1.5 py-0.2 rounded-md font-bold">
+                      <span className="text-[9px] bg-[#386641] dark:bg-[#2e5936] text-white px-1.5 py-0.2 rounded-md font-bold">
                         🎨 {t('drawing_now')}
                       </span>
                     )}
 
                     {player.hasGuessed && (
-                      <span className="text-[9px] bg-[#386641]/15 text-[#2c5234] px-1.5 py-0.2 rounded-md font-bold">
+                      <span className="text-[9px] bg-[#386641]/15 dark:bg-[#2e5936]/40 text-[#2c5234] dark:text-[#6ee7b7] px-1.5 py-0.2 rounded-md font-bold">
                         ✓ {t('guessed')}
                       </span>
                     )}
@@ -116,10 +116,10 @@ export function PlayerList({
 
               {/* Right Side: Score */}
               <div className="text-right flex-shrink-0">
-                <span className="font-extrabold text-xs text-[#386641]">
+                <span className="font-extrabold text-xs text-[#386641] dark:text-[#6ee7b7]">
                   {player.score || 0}
                 </span>
-                <span className="text-[9px] text-stone-400 block font-semibold">pt</span>
+                <span className="text-[9px] text-stone-400 dark:text-stone-500 block font-semibold">pt</span>
               </div>
             </div>
           );
@@ -128,8 +128,8 @@ export function PlayerList({
 
       {/* Spectator Time Boost Power-Up */}
       {gameState === 'DRAWING' && (
-        <div className="p-2 bg-stone-50 border border-stone-200 rounded-xl space-y-1 text-center">
-          <span className="text-[10px] font-bold text-stone-500 uppercase tracking-wider block">
+        <div className="p-2 bg-stone-50 dark:bg-[#1c232d] border border-stone-200 dark:border-[#333e4d] rounded-xl space-y-1 text-center">
+          <span className="text-[10px] font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider block">
             ⚡ Party Power-Up
           </span>
           <button
@@ -159,7 +159,7 @@ export function PlayerList({
       )}
 
       {gameState === 'LOBBY' && !isHost && (
-        <div className="p-3 bg-stone-100 rounded-xl text-center text-xs font-semibold text-stone-500 animate-pulse border border-stone-200">
+        <div className="p-3 bg-stone-100 dark:bg-[#1c232d] rounded-xl text-center text-xs font-semibold text-stone-500 dark:text-stone-400 animate-pulse border border-stone-200 dark:border-[#333e4d]">
           {t('waiting_for_host')}
         </div>
       )}

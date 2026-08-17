@@ -52,7 +52,7 @@ export function Toolbar({
   };
 
   return (
-    <div className="w-full glass-panel rounded-2xl p-2 md:p-3 flex flex-col md:flex-row items-center justify-between gap-2.5 border border-[#e5e0d5] shadow-sm bg-white text-[#1e242b] animate-fade-in select-none">
+    <div className="w-full glass-panel rounded-2xl p-2 md:p-3 flex flex-col md:flex-row items-center justify-between gap-2.5 border border-[#e5e0d5] dark:border-[#333e4d] shadow-sm bg-white dark:bg-[#161b22] text-[#1e242b] dark:text-[#f1f5f9] animate-fade-in select-none">
       {/* Top Row on Mobile: Tools, Shapes, Undo, Clear */}
       <div className="w-full md:w-auto flex items-center justify-between md:justify-start space-x-1.5 overflow-x-auto pb-1 md:pb-0 custom-scrollbar">
         {/* Drawing Tools */}
@@ -63,7 +63,7 @@ export function Toolbar({
             className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
               activeTool === 'pen'
                 ? 'bg-[#386641] text-white shadow-xs'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+                : 'bg-stone-100 dark:bg-[#1c232d] hover:bg-stone-200 dark:hover:bg-[#252f3d] text-stone-700 dark:text-stone-300'
             }`}
             title={t('tool_pen')}
           >
@@ -76,7 +76,7 @@ export function Toolbar({
             className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
               activeTool === 'highlighter'
                 ? 'bg-[#386641] text-white shadow-xs'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+                : 'bg-stone-100 dark:bg-[#1c232d] hover:bg-stone-200 dark:hover:bg-[#252f3d] text-stone-700 dark:text-stone-300'
             }`}
             title={t('tool_highlighter')}
           >
@@ -89,7 +89,7 @@ export function Toolbar({
             className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
               activeTool === 'eraser'
                 ? 'bg-[#386641] text-white shadow-xs'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+                : 'bg-stone-100 dark:bg-[#1c232d] hover:bg-stone-200 dark:hover:bg-[#252f3d] text-stone-700 dark:text-stone-300'
             }`}
             title={t('tool_eraser')}
           >
@@ -102,7 +102,7 @@ export function Toolbar({
             className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
               activeTool === 'fill'
                 ? 'bg-[#386641] text-white shadow-xs'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+                : 'bg-stone-100 dark:bg-[#1c232d] hover:bg-stone-200 dark:hover:bg-[#252f3d] text-stone-700 dark:text-stone-300'
             }`}
             title={t('tool_fill')}
           >
@@ -110,7 +110,7 @@ export function Toolbar({
           </button>
         </div>
 
-        <div className="h-6 w-px bg-stone-200 mx-0.5 md:mx-1 flex-shrink-0" />
+        <div className="h-6 w-px bg-stone-200 dark:bg-[#333e4d] mx-0.5 md:mx-1 flex-shrink-0" />
 
         {/* Shapes */}
         <div className="flex items-center space-x-1">
@@ -120,7 +120,7 @@ export function Toolbar({
             className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
               activeTool === 'line'
                 ? 'bg-[#386641] text-white shadow-xs'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+                : 'bg-stone-100 dark:bg-[#1c232d] hover:bg-stone-200 dark:hover:bg-[#252f3d] text-stone-700 dark:text-stone-300'
             }`}
             title={t('tool_line')}
           >
@@ -133,7 +133,7 @@ export function Toolbar({
             className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
               activeTool === 'circle'
                 ? 'bg-[#386641] text-white shadow-xs'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+                : 'bg-stone-100 dark:bg-[#1c232d] hover:bg-stone-200 dark:hover:bg-[#252f3d] text-stone-700 dark:text-stone-300'
             }`}
             title={t('tool_circle')}
           >
@@ -146,7 +146,7 @@ export function Toolbar({
             className={`p-2.5 md:p-2 rounded-xl transition touch-manipulation ${
               activeTool === 'rectangle'
                 ? 'bg-[#386641] text-white shadow-xs'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 active:bg-stone-300'
+                : 'bg-stone-100 dark:bg-[#1c232d] hover:bg-stone-200 dark:hover:bg-[#252f3d] text-stone-700 dark:text-stone-300'
             }`}
             title={t('tool_rectangle')}
           >
@@ -154,7 +154,7 @@ export function Toolbar({
           </button>
         </div>
 
-        <div className="h-6 w-px bg-stone-200 mx-0.5 md:mx-1 flex-shrink-0" />
+        <div className="h-6 w-px bg-stone-200 dark:bg-[#333e4d] mx-0.5 md:mx-1 flex-shrink-0" />
 
         {/* Action buttons (Undo, Clear, SuperHint, Download) */}
         <div className="flex items-center space-x-1 flex-shrink-0">
@@ -162,17 +162,17 @@ export function Toolbar({
             <button
               type="button"
               onClick={() => { soundEngine.playClick(); onRequestSuperHint(); }}
-              className="p-2.5 md:p-2 rounded-xl bg-[#fff8eb] hover:bg-[#fdeecb] text-[#9c6615] transition border border-[#f5e3bc] font-bold text-xs flex items-center space-x-1 touch-manipulation"
+              className="p-2.5 md:p-2 rounded-xl bg-[#fff8eb] dark:bg-[#3d2c1e] hover:bg-[#fdeecb] text-[#9c6615] dark:text-[#fcd34d] transition border border-[#f5e3bc] dark:border-[#784f1a] font-bold text-xs flex items-center space-x-1 touch-manipulation"
               title={t('powerup_super_hint')}
             >
-              <Lightbulb className="w-4 h-4 text-[#c86d3b] fill-current" />
+              <Lightbulb className="w-4 h-4 text-[#c86d3b] dark:text-[#ea7a3e] fill-current" />
             </button>
           )}
 
           <button
             type="button"
             onClick={onUndo}
-            className="p-2.5 md:p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition touch-manipulation active:scale-95"
+            className="p-2.5 md:p-2 rounded-xl bg-stone-100 dark:bg-[#1c232d] hover:bg-stone-200 dark:hover:bg-[#252f3d] text-stone-700 dark:text-stone-300 transition border border-stone-200 dark:border-[#333e4d] touch-manipulation active:scale-95"
             title={t('undo_stroke')}
           >
             <RotateCcw className="w-4 h-4" />
@@ -181,7 +181,7 @@ export function Toolbar({
           <button
             type="button"
             onClick={onClear}
-            className="p-2.5 md:p-2 rounded-xl bg-[#fdf0f0] hover:bg-[#fce1e1] text-[#b93838] transition border border-[#f4c2c2] touch-manipulation active:scale-95"
+            className="p-2.5 md:p-2 rounded-xl bg-[#fdf0f0] dark:bg-[#3d1a1a] hover:bg-[#fce1e1] text-[#b93838] dark:text-[#fca5a5] transition border border-[#f4c2c2] dark:border-[#7a2e2e] touch-manipulation active:scale-95"
             title={t('clear_canvas')}
           >
             <Trash2 className="w-4 h-4" />
@@ -190,7 +190,7 @@ export function Toolbar({
           <button
             type="button"
             onClick={onDownload}
-            className="p-2.5 md:p-2 rounded-xl bg-[#eaf2eb] hover:bg-[#deede0] text-[#2c5234] transition border border-[#c7decb] touch-manipulation active:scale-95"
+            className="p-2.5 md:p-2 rounded-xl bg-[#eaf2eb] dark:bg-[#1f3323] hover:bg-[#deede0] text-[#2c5234] dark:text-[#6ee7b7] transition border border-[#c7decb] dark:border-[#2e5936] touch-manipulation active:scale-95"
             title={t('download_png')}
           >
             <Download className="w-4 h-4" />
@@ -208,8 +208,8 @@ export function Toolbar({
                 key={color}
                 type="button"
                 onClick={() => handleColorSelect(color)}
-                className={`w-6 h-6 md:w-5 md:h-5 rounded-full transition-transform touch-manipulation flex-shrink-0 ${
-                  currentColor === color ? 'scale-125 ring-2 ring-[#386641] shadow-xs' : 'hover:scale-110 opacity-90'
+                className={`w-6 h-6 md:w-5 md:h-5 rounded-full transition-transform touch-manipulation flex-shrink-0 border border-stone-300 dark:border-stone-600 ${
+                  currentColor === color ? 'scale-125 ring-2 ring-[#386641] dark:ring-[#52a061] shadow-xs' : 'hover:scale-110 opacity-90'
                 }`}
                 style={{ backgroundColor: color }}
               />
@@ -225,16 +225,16 @@ export function Toolbar({
         </div>
 
         {/* Stroke Size Slider */}
-        <div className="flex items-center space-x-1.5 flex-shrink-0 bg-stone-50 px-2 py-1 rounded-xl border border-stone-200">
+        <div className="flex items-center space-x-1.5 flex-shrink-0 bg-stone-50 dark:bg-[#1c232d] px-2 py-1 rounded-xl border border-stone-200 dark:border-[#333e4d]">
           <input
             type="range"
             min="2"
             max="36"
             value={strokeWidth}
             onChange={(e) => setStrokeWidth(Number(e.target.value))}
-            className="w-16 md:w-20 accent-[#386641]"
+            className="w-16 md:w-20 accent-[#386641] dark:accent-[#52a061]"
           />
-          <span className="text-[11px] md:text-xs font-bold text-stone-600 w-5">{strokeWidth}px</span>
+          <span className="text-[11px] md:text-xs font-bold text-stone-600 dark:text-stone-300 w-5">{strokeWidth}px</span>
         </div>
 
         {/* Theme & Particle FX Selectors (Hidden on very small screens, visible on md+) */}
@@ -242,7 +242,7 @@ export function Toolbar({
           <select
             value={canvasTheme}
             onChange={(e) => setCanvasTheme(e.target.value)}
-            className="bg-stone-50 border border-stone-200 rounded-xl px-2 py-1.5 text-xs font-bold text-stone-800"
+            className="bg-stone-50 dark:bg-[#1c232d] border border-stone-200 dark:border-[#333e4d] rounded-xl px-2 py-1.5 text-xs font-bold text-stone-800 dark:text-stone-200"
           >
             <option value="white">🤍 {t('theme_white')}</option>
             <option value="blackboard">🏫 {t('theme_blackboard')}</option>
@@ -253,7 +253,7 @@ export function Toolbar({
           <select
             value={particleFx}
             onChange={(e) => setParticleFx(e.target.value)}
-            className="bg-stone-50 border border-stone-200 rounded-xl px-2 py-1.5 text-xs font-bold text-stone-800"
+            className="bg-stone-50 dark:bg-[#1c232d] border border-stone-200 dark:border-[#333e4d] rounded-xl px-2 py-1.5 text-xs font-bold text-stone-800 dark:text-stone-200"
           >
             <option value="none">✏️ {t('fx_none')}</option>
             <option value="stars">✨ {t('fx_stars')}</option>

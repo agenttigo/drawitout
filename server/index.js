@@ -3,6 +3,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
 import { RoomManager } from './game/RoomManager.js';
+import { StudioManager } from './game/StudioManager.js';
 import { cleanText } from './utils/profanityFilter.js';
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(cors());
 
 const server = http.createServer(app);
 const roomManager = new RoomManager();
+const studioManager = new StudioManager();
 
 const io = new Server(server, {
   cors: {
@@ -19,11 +21,19 @@ const io = new Server(server, {
 });
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', activeRooms: roomManager.rooms.size });
+  res.json({
+    status: 'ok',
+    activeRooms: roomManager.rooms.size,
+    activeStudios: studioManager.rooms.size,
+  });
 });
 
 io.on('connection', (socket) => {
   console.log(`⚡ Player connected: ${socket.id}`);
+
+  // ==========================================
+  // GAME ROOM EVENTS
+  // ==========================================
 
   // 1. Create Room
   socket.on('create_room', ({ player, settings }, callback) => {
@@ -226,8 +236,6 @@ io.on('connection', (socket) => {
       timestamp: new Date().toISOString(),
     };
 
-    // ISOLATION: If game is in progress and player HAS ALREADY GUESSED:
-    // Only send to Drawer & Other Guessed Players!
     if (room.state === 'DRAWING' && player.hasGuessed) {
       chatMsg.isGuesserOnly = true;
       room.players.forEach(p => {
@@ -236,7 +244,6 @@ io.on('connection', (socket) => {
         }
       });
     } else {
-      // In LOBBY or for un-guessed players: broadcast to all in room
       io.to(roomId).emit('chat_message', chatMsg);
     }
   });
@@ -257,9 +264,53 @@ io.on('connection', (socket) => {
     }
   });
 
-  // 14. Disconnect
+  // ==========================================
+  // CREATOR STUDIO EVENTS (Collaborative Studio)
+  // ==========================================
+
+  socket.on('studio_join', ({ roomId, user }, callback) => {
+    try {
+      const studioRoom = studioManager.createOrJoinStudio(roomId, { ...user, id: socket.id });
+      socket.join(`studio_${roomId}`);
+      callback({ success: true, studioState: studioManager.getRoomState(roomId) });
+      socket.to(`studio_${roomId}`).emit('studio_user_joined', { user: { ...user, id: socket.id } });
+      console.log(`🎨 User ${user.name} joined studio room ${roomId}`);
+    } catch (err) {
+      console.error('Error joining studio room:', err);
+      callback({ success: false, error: 'Nem sikerült csatlakozni a stúdióhoz.' });
+    }
+  });
+
+  socket.on('studio_stroke', ({ roomId, stroke }) => {
+    const saved = studioManager.addStroke(roomId, stroke);
+    if (saved) {
+      socket.to(`studio_${roomId}`).emit('studio_stroke', stroke);
+    }
+  });
+
+  socket.on('studio_layers_update', ({ roomId, layers }) => {
+    studioManager.updateLayers(roomId, layers);
+    socket.to(`studio_${roomId}`).emit('studio_layers_update', layers);
+  });
+
+  socket.on('studio_cursor_move', ({ roomId, cursor }) => {
+    studioManager.updateCursor(roomId, socket.id, cursor);
+    socket.to(`studio_${roomId}`).emit('studio_cursor_move', { userId: socket.id, cursor });
+  });
+
+  socket.on('studio_clear', ({ roomId }) => {
+    studioManager.clearCanvas(roomId);
+    io.to(`studio_${roomId}`).emit('studio_clear');
+  });
+
+  // ==========================================
+  // DISCONNECT HANDLER
+  // ==========================================
+
   socket.on('disconnect', () => {
     console.log(`🔌 Player disconnected: ${socket.id}`);
+
+    // Clean up game rooms
     const leftRooms = roomManager.removePlayerFromAllRooms(socket.id);
     leftRooms.forEach((room) => {
       io.to(room.roomId).emit('game_state_update', room.getPublicState());
@@ -268,6 +319,12 @@ io.on('connection', (socket) => {
         isSystem: true,
         text: `🔌 Egy játékos lekapcsolódott.`,
       });
+    });
+
+    // Clean up studio rooms
+    const leftStudios = studioManager.removeUser(socket.id);
+    leftStudios.forEach((studioId) => {
+      io.to(`studio_${studioId}`).emit('studio_user_left', { userId: socket.id });
     });
   });
 });

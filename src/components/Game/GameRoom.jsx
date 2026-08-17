@@ -13,7 +13,7 @@ import { ReactionOverlay } from './ReactionOverlay';
 import { ProfanityDisclaimerModal } from '../Lobby/ProfanityDisclaimerModal';
 import { Footer } from '../Common/Footer';
 import { soundEngine } from '../../utils/soundEngine';
-import { unlockBadge } from '../../utils/achievementSystem';
+import { unlockBadge, recordGameResult } from '../../utils/achievementSystem';
 import {
   Settings,
   Copy,
@@ -181,10 +181,12 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
       setLeaderboard(leaderboard);
       setGameState((prev) => prev ? { ...prev, gallery } : prev);
 
+      const myRank = leaderboard.findIndex(p => p.id === socket.id);
+      const isWinner = myRank === 0;
+      const onPodium = myRank >= 0 && myRank < 3;
       const myScore = leaderboard.find(p => p.id === socket.id)?.score || 0;
-      if (myScore >= 1000) {
-        unlockBadge('genius');
-      }
+
+      recordGameResult({ won: isWinner, score: myScore, placedOnPodium: onPodium });
     };
 
     socket.on('game_state_update', handleStateUpdate);
@@ -581,13 +583,20 @@ export function GameRoom({ initialRoomState, onLeaveRoom }) {
                         disabled={!isHost}
                         value={gameState.category || 'all'}
                         onChange={(e) => handleUpdateSetting('category', e.target.value)}
-                        className="w-full bg-white border border-stone-200 rounded-xl px-3 py-2 text-xs font-bold text-[#1e242b] disabled:opacity-80"
+                        className="w-full bg-white dark:bg-[#161b22] border border-stone-200 dark:border-[#333e4d] rounded-xl px-3 py-2 text-xs font-bold text-[#1e242b] dark:text-white disabled:opacity-80"
                       >
                         <option value="all">{t('cat_all')}</option>
+                        <option value="general">{t('cat_general')}</option>
+                        <option value="animals">{t('cat_animals')}</option>
+                        <option value="food">{t('cat_food')}</option>
                         <option value="tech">{t('cat_tech')}</option>
                         <option value="movies">{t('cat_movies')}</option>
-                        <option value="food">{t('cat_food')}</option>
-                        <option value="animals">{t('cat_animals')}</option>
+                        <option value="sports">{t('cat_sports')}</option>
+                        <option value="professions">{t('cat_professions')}</option>
+                        <option value="places">{t('cat_places')}</option>
+                        <option value="fantasy">{t('cat_fantasy')}</option>
+                        <option value="vehicles">{t('cat_vehicles')}</option>
+                        <option value="brands">{t('cat_brands')}</option>
                       </select>
                     </div>
                   </div>
